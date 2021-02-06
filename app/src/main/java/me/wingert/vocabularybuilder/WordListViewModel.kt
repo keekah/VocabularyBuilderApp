@@ -1,5 +1,7 @@
 package me.wingert.vocabularybuilder
 
+import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,16 +9,29 @@ import androidx.lifecycle.ViewModel
 class WordListViewModel : ViewModel() {
 
     private val _wordList = mutableListOf<LiveData<String>>()
-
-
     val wordList : List<LiveData<String>>
         get() = _wordList
+
+    private var _newWord = MutableLiveData<String?>()
+    val newWord : LiveData<String?>
+        get() = _newWord
 
 
     init {
         populateWordList()
     }
 
+    fun getNewWord(word: Editable) {
+        _newWord.value = word.toString()
+    }
+
+    fun onAdd(newWord: Editable) {
+        // check if word is already in list
+        // if not, add the word
+        // update
+        _wordList.add(MutableLiveData(newWord.toString()))
+        Log.i("WordListViewModel", "$newWord added to list")
+    }
 
     private fun populateWordList() {
         _wordList.add(MutableLiveData("hirsute"))

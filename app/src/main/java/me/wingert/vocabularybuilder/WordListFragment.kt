@@ -28,6 +28,8 @@ class WordListFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+        binding.addButton.setOnClickListener { viewModel.onAdd(binding.wordEdit.text) }
+
         createTextViews(binding.scrollLayout)
 
         return binding.root
