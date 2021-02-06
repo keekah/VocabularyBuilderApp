@@ -15,28 +15,25 @@ import me.wingert.vocabularybuilder.databinding.FragmentWordListBinding
 
 class WordListFragment : Fragment() {
 
+    private lateinit var binding : FragmentWordListBinding
     private lateinit var viewModel : WordListViewModel
     private lateinit var viewModelFactory : WordListViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding : FragmentWordListBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_word_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_word_list, container, false)
 
         viewModelFactory = WordListViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(WordListViewModel::class.java)
 
         binding.viewModel = viewModel
 
-        val layout = binding.scrollLayout
-
-        if (this::viewModel.isInitialized)
-            createTextViews(layout)
-        else
-            Log.i("WordListFragment", "ViewModel not initialized")
+        createTextViews(binding.scrollLayout)
 
         return binding.root
     }
 
+    // Dynamically add TextViews of the hard-coded list because I want to have something to display for now.
     private fun createTextViews(layout : LinearLayout) {
         Log.i("WordListFragment", "list size: ${viewModel.wordList.size}")
         for (word in viewModel.wordList) {
@@ -46,6 +43,5 @@ class WordListFragment : Fragment() {
             layout.addView(newTextView)
         }
     }
-
 
 }
