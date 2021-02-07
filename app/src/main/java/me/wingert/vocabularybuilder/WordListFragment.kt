@@ -1,9 +1,12 @@
 package me.wingert.vocabularybuilder
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -44,13 +47,25 @@ class WordListFragment : Fragment() {
     }
 
     private fun setAddButtonClickListener() {
-        binding.addButton.setOnClickListener { viewModel.onAdd(binding.wordEdit.text) }
+        binding.addButton.setOnClickListener { addWord() }
 
         viewModel.wordList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.data = it
+                viewModel.finishedAdding()
             }
         })
+    }
+
+    private fun addWord() {
+        viewModel.onAdd(binding.wordEdit.text)
+        binding.wordEdit.text.clear()
+        hideKeyboard(binding.wordEdit)
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

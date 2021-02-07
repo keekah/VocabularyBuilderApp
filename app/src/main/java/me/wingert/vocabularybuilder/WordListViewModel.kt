@@ -12,9 +12,14 @@ class WordListViewModel : ViewModel() {
     val wordList : LiveData<List<String>>
         get() = _wordList
 
+    private val _newWord = MutableLiveData<String>()
+    val newWord : LiveData<String>
+        get() = _newWord
+
 
     init {
         populateWordList()
+        Log.i("WordListViewModel.kt", "_newWord . value = ${_newWord.value.toString()}")
     }
 
 
@@ -24,7 +29,10 @@ class WordListViewModel : ViewModel() {
         // update
         Log.i("WordListViewModel", "$newWord added to list")
         _wordList.value = _wordList.value?.plus(newWord.toString())
+    }
 
+    fun finishedAdding() {
+        _newWord.value = ""
     }
 
     private fun populateWordList() {
