@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">VocabularyBuilder</string>
-    <string name="halcyon_def">denoting a period of time in the past that was idyllically happy and peaceful</string>
+    <string name="app_name">Vocabulary Builder</string>
 </resources>
