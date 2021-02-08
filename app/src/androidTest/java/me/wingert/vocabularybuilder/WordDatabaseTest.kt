@@ -5,8 +5,8 @@ import androidx.lifecycle.*
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import junit.framework.Assert.assertEquals
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import junit.framework.Assert.*
 import me.wingert.vocabularybuilder.database.VocabularyWord
 import me.wingert.vocabularybuilder.database.WordDao
 import me.wingert.vocabularybuilder.database.WordDatabase
@@ -23,7 +23,6 @@ class WordDatabaseTest {
 
     private lateinit var wordDao : WordDao
     private lateinit var database : WordDatabase
-
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -47,7 +46,7 @@ class WordDatabaseTest {
     fun testInsert() {
         val vocab = VocabularyWord(word = "hirsute")
         wordDao.insert(vocab)
-        val retrievedWord = wordDao.getMostRecentWord()
+        val retrievedWord = wordDao.getWord("hirsute")
 
         assertEquals(vocab.word, retrievedWord?.word)
     }
@@ -57,12 +56,59 @@ class WordDatabaseTest {
     fun testUpdate() {
         wordDao.insert(VocabularyWord(word = "halcyon"))
 
-        var vocab = wordDao.getWord("halcyon")
+        val vocab = wordDao.getWord("halcyon")
         val def = "denoting a period of time in the past that was idyllically happy and peaceful"
         vocab?.definition = def
         wordDao.update(vocab!!)
 
-        assertEquals(vocab?.definition, def)
+        assertEquals(vocab.definition, def)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testDeleteWord() {
+        val word = "mnemonic"
+        assertNull(wordDao.getWord(word))
+
+        val vocab = VocabularyWord(word = word)
+        wordDao.insert(vocab)
+        assertNotNull(wordDao.getWord(word))
+
+        wordDao.deleteWord(wordDao.getWord(word)!!)
+        assertNull(wordDao.getWord(word))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testGetWord() {
+        assertNull(wordDao.getWord("nascent"))
+        wordDao.insert(VocabularyWord(word = "nascent"))
+        assertNotNull(wordDao.getWord("nascent"))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testGetAllWords() {
+        wordDao.getAllWords().observeOnce {
+            assertEquals(0, it.size)
+        }
+
+        wordDao.insert(VocabularyWord(word = "nootropic"))
+        wordDao.insert(VocabularyWord(word = "credenza", definition = "counter"))
+        wordDao.insert(VocabularyWord(word = "excoriate"))
+        var vocab = wordDao.getWord("excoriate")
+        vocab?.definition = "censure or criticize severely"
+        wordDao.update(vocab!!)
+
+        wordDao.getAllWords().observeOnce {
+            assertEquals(3, it.size)
+        }
+
+        wordDao.deleteWord(wordDao.getWord("nootropic")!!)
+
+        wordDao.getAllWords().observeOnce {
+            assertEquals(2, it.size)
+        }
     }
 
     @Test
@@ -86,7 +132,9 @@ class WordDatabaseTest {
 }
 
 class OneTimeObserver<T>(private val handler: (T) -> Unit) : Observer<T>, LifecycleOwner {
+
     private val lifecycle = LifecycleRegistry(this)
+
     init {
         lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
     }
