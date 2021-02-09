@@ -26,7 +26,6 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        Log.i("WordAdapter bind", "data . value = $data.value")
         val item = data[position]
         holder.textView.text = item.word
     }
