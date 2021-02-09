@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import me.wingert.vocabularybuilder.database.VocabularyWord
 
 class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
 
-    var data = listOf<String>()
+    var data = listOf<VocabularyWord>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -27,7 +28,7 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         Log.i("WordAdapter bind", "data . value = $data.value")
         val item = data[position]
-        holder.textView.text = item
+        holder.textView.text = item.word
     }
 
     class WordViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
