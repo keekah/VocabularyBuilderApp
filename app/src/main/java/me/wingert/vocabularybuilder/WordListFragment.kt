@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -30,7 +29,7 @@ class WordListFragment : Fragment() {
         initializeAdapter()
 
         binding.lifecycleOwner = viewLifecycleOwner
-//        binding.addButton.setOnClickListener { addWord() }
+
         setAddButtonClickListener()
 
         return binding.root
@@ -47,7 +46,7 @@ class WordListFragment : Fragment() {
     }
 
     private fun initializeAdapter() {
-        adapter = WordAdapter(WordAdapter.DeleteClickListener { viewModel.deleteWord(it) })
+        adapter = WordAdapter(WordAdapter.DeleteClickListener { viewModel.deleteWord(it) }, WordAdapter.OnClickListener { viewModel.onItemClick(it) })
 
         binding.wordList.adapter = adapter
     }
@@ -58,7 +57,6 @@ class WordListFragment : Fragment() {
         viewModel.wordList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.data = it
-//                viewModel.finishedAdding()
             }
         })
     }
