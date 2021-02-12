@@ -27,9 +27,11 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         holder.deleteIcon.visibility = View.INVISIBLE
-        holder.deleteIcon.setOnClickListener { deleteClickListener.onClick(item) }
+        holder.definitionText.visibility = View.GONE
 
+        holder.deleteIcon.setOnClickListener { deleteClickListener.onClick(item) }
         holder.itemView.setOnClickListener { itemClicked(item, holder) }
+
         holder.bind(item)
     }
 
@@ -39,12 +41,17 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
             View.VISIBLE -> View.INVISIBLE
             else -> View.VISIBLE
         }
+        holder.definitionText.visibility = when (holder.definitionText.visibility) {
+            View.VISIBLE -> View.GONE
+            else -> View.VISIBLE
+        }
     }
 
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val wordText : TextView = itemView.findViewById(R.id.word_text)
         val deleteIcon : ImageView = itemView.findViewById(R.id.delete_icon)
+        val definitionText : TextView = itemView.findViewById(R.id.definition_text)
 
         companion object {
 
@@ -57,6 +64,9 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
 
         fun bind(item: VocabularyWord) {
             wordText.text = item.word
+
+            val resources = itemView.context.resources
+            definitionText.text = item.definition ?: resources.getString(R.string.definition_filler)
         }
     }
 
