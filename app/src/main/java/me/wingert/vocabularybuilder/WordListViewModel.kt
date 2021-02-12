@@ -47,6 +47,18 @@ class WordListViewModel(val database: WordDao, application: Application) : Andro
         }
     }
 
+    fun deleteWord(vocab: VocabularyWord) {
+        viewModelScope.launch {
+            delete(vocab)
+        }
+    }
+
+    private suspend fun delete(vocab: VocabularyWord) {
+        withContext(Dispatchers.IO) {
+            database.deleteWord(vocab)
+        }
+    }
+
 //    fun finishedAdding() {
 //        _newWord.value = ""
 //    }

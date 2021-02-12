@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
-class WordAdapter : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
+class WordAdapter(private val deleteClickListener: DeleteClickListener) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 
     var data = listOf<VocabularyWord>()
         set(value) {
@@ -27,6 +27,7 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
+        holder.deleteIcon.setOnClickListener { deleteClickListener.onClick(item) }
         holder.bind(item)
     }
 
@@ -48,7 +49,10 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
             val res = itemView.context.resources
 
             wordText.text = item.word
-//            deleteIcon.setImageResource(R.drawable.ic_baseline_delete_24)
         }
+    }
+
+    class DeleteClickListener(val deleteClickListener: (vocab: VocabularyWord) -> Unit) {
+        fun onClick(vocab: VocabularyWord) = deleteClickListener(vocab)
     }
 }

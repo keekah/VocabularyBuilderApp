@@ -47,7 +47,7 @@ class WordListFragment : Fragment() {
     }
 
     private fun initializeAdapter() {
-        adapter = WordAdapter()
+        adapter = WordAdapter(WordAdapter.DeleteClickListener { viewModel.deleteWord(it) })
 
         binding.wordList.adapter = adapter
     }
