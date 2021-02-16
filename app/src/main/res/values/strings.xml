@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Vocabulary Builder</string>
     <string name="delete_word">delete word</string>
-    <string name="definition_filler">a statement of the exact meaning of a word, especially in a dictionary.</string>
+    <string name="definition_filler">.za statement of the exact meaning of a word, especially in a dictionary.</string>
 </resources>

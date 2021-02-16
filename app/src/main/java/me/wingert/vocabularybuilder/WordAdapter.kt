@@ -3,10 +3,15 @@ package me.wingert.vocabularybuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.database.VocabularyWord
+import java.security.AccessController.getContext
 
 class WordAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 
@@ -26,6 +31,10 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
+
+        holder.wordText.bringToFront()
+        holder.deleteIcon.bringToFront()
+
         holder.deleteIcon.visibility = View.INVISIBLE
         holder.definitionText.visibility = View.GONE
 
@@ -41,11 +50,34 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
             View.VISIBLE -> View.INVISIBLE
             else -> View.VISIBLE
         }
-        holder.definitionText.visibility = when (holder.definitionText.visibility) {
-            View.VISIBLE -> View.GONE
-            else -> View.VISIBLE
+
+        when (holder.definitionText.visibility) {
+            View.VISIBLE -> slideUp(holder.definitionText)
+            else -> slideDown(holder)
         }
     }
+
+    private fun slideUp(view : View) {
+//        val animation = TranslateAnimation(0F, 0F, 0F, -view.height.toFloat())
+//        animation.duration = 300
+//        view.startAnimation(animation)
+        view.visibility = View.GONE
+    }
+
+    private fun slideDown(holder: ViewHolder) {
+        val animationSet = AnimationSet(true)
+
+        val height = holder.definitionText.height.toFloat()
+        val bottom = holder.definitionText.height - height
+
+        val translate = TranslateAnimation(0F, 0F, -height, 0F)
+        translate.duration = 300
+
+        holder.definitionText.startAnimation(translate)
+        holder.definitionText.visibility = View.VISIBLE
+    }
+
+
 
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
