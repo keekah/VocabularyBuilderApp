@@ -1,13 +1,13 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.undefinedwords
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
-class UndefinedWordAdapter : RecyclerView.Adapter<UndefinedWordAdapter.ViewHolder>() {
+class UndefinedWordsAdapter : RecyclerView.Adapter<UndefinedWordsAdapter.ViewHolder>() {
 
     var undefinedWords = listOf<VocabularyWord>()
         set (value) {

@@ -1,17 +1,15 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.wordlist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
-import java.security.AccessController.getContext
 
 class WordAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
 

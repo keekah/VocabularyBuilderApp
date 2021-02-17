@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.wordlist
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentWordListBinding
 

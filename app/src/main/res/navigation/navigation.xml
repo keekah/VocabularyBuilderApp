@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_word_list"
-        android:name="me.wingert.vocabularybuilder.WordListFragment"
+        android:name="me.wingert.vocabularybuilder.wordlist.WordListFragment"
         android:label="WordListFragment"
         tools:layout="@layout/fragment_word_list">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_undefined_words"
-        android:name="me.wingert.vocabularybuilder.UndefinedWordsFragment"
+        android:name="me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsFragment"
         android:label="UndefinedWordsFragment"
         tools:layout="@layout/fragment_undefined_words" />
 

@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.wordlist
 
 import android.app.Application
 import android.text.Editable

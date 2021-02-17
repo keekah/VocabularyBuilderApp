@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.undefinedwords
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentUndefinedWordsBinding
 
@@ -15,11 +16,12 @@ class UndefinedWordsFragment : Fragment() {
     private lateinit var binding : FragmentUndefinedWordsBinding
     private lateinit var viewModel: UndefinedWordsViewModel
     private lateinit var viewModelFactory: UndefinedWordsViewModelFactory
-    private lateinit var adapter : UndefinedWordAdapter
+    private lateinit var adapter : UndefinedWordsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_undefined_words, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_undefined_words, container, false)
 
         initializeViewModel()
 
@@ -42,7 +44,7 @@ class UndefinedWordsFragment : Fragment() {
     }
 
     private fun initializeAdapter() {
-        adapter = UndefinedWordAdapter()
+        adapter = UndefinedWordsAdapter()
 
         binding.undefinedWordList.adapter = adapter
     }

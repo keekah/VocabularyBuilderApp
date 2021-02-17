@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="me.wingert.vocabularybuilder.UndefinedWordsViewModel" />
+            type="me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

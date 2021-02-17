@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.undefinedwords
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

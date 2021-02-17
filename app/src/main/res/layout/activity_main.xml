@@ -23,7 +23,7 @@
 
             <fragment
                 android:id="@+id/wordListFragment"
-                android:name="me.wingert.vocabularybuilder.WordListFragment"
+                android:name="me.wingert.vocabularybuilder.wordlist.WordListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

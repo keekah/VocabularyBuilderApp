@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="me.wingert.vocabularybuilder.WordListViewModel" />
+            type="me.wingert.vocabularybuilder.wordlist.WordListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder;
+package me.wingert.vocabularybuilder.wordlist;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Delete;
 
 import java.util.List;
 
+import me.wingert.vocabularybuilder.R;
 import me.wingert.vocabularybuilder.database.VocabularyWord;
 
 public class VocabAdapter extends RecyclerView.Adapter<VocabAdapter.ViewHolder>
