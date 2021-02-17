@@ -2,4 +2,5 @@
     <string name="app_name">Vocabulary Builder</string>
     <string name="delete_word">delete word</string>
     <string name="definition_filler">.za statement of the exact meaning of a word, especially in a dictionary.</string>
+    <string name="select_to_add_definition">Select a word to add a definition</string>
 </resources>
