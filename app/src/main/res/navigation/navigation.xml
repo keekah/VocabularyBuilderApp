@@ -10,6 +10,15 @@
         android:id="@+id/fragment_word_list"
         android:name="me.wingert.vocabularybuilder.WordListFragment"
         android:label="WordListFragment"
-        tools:layout="@layout/fragment_word_list"/>
+        tools:layout="@layout/fragment_word_list">
+        <action
+            android:id="@+id/action_fragment_word_list_to_undefinedWordsFragment"
+            app:destination="@id/fragment_undefined_words" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_undefined_words"
+        android:name="me.wingert.vocabularybuilder.UndefinedWordsFragment"
+        android:label="UndefinedWordsFragment"
+        tools:layout="@layout/fragment_undefined_words" />
 
 </navigation>
