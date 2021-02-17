@@ -1,6 +1,5 @@
 package me.wingert.vocabularybuilder
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -114,11 +113,11 @@ class WordDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun testGetWordsWithNoDefinition() {
-        wordDao.getWordsWithNoDefinition().observeOnce {
+        wordDao.getUndefinedWords().observeOnce {
             assertEquals(0, it.size)
         }
         wordDao.insert(VocabularyWord(word ="loosies"))
-        wordDao.getWordsWithNoDefinition().observeOnce {
+        wordDao.getUndefinedWords().observeOnce {
             assertEquals(1, it.size)
         }
     }

@@ -1,22 +1,25 @@
 package me.wingert.vocabularybuilder.undefinedwords
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.undefined_word_view.view.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
 class UndefinedWordsAdapter : RecyclerView.Adapter<UndefinedWordsAdapter.ViewHolder>() {
 
     var undefinedWords = listOf<VocabularyWord>()
-        set (value) {
+        set(value) {
             field = value
+            notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.undefined_word_view, parent, false) as TextView
+        val view = layoutInflater.inflate(R.layout.undefined_word_view, parent, false)
 
         return ViewHolder(view)
     }
@@ -24,12 +27,12 @@ class UndefinedWordsAdapter : RecyclerView.Adapter<UndefinedWordsAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = undefinedWords[position]
 
-        holder.textView.text = item.word
+        holder.itemView.undefined_word_text.text = item.word
     }
 
     override fun getItemCount(): Int {
         return undefinedWords.size
     }
 
-    class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

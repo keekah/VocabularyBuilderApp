@@ -22,5 +22,5 @@ interface WordDao {
     fun getAllWords() : LiveData<List<VocabularyWord>>
 
     @Query("SELECT * FROM vocabulary_words WHERE definition IS NULL")
-    fun getWordsWithNoDefinition() : LiveData<List<VocabularyWord>>
+    fun getUndefinedWords() : LiveData<List<VocabularyWord>>
 }

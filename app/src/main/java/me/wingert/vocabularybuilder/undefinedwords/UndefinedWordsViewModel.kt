@@ -6,5 +6,6 @@ import me.wingert.vocabularybuilder.database.WordDao
 
 class UndefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    val undefinedWords = database.getWordsWithNoDefinition()
+    val undefinedWords = database.getUndefinedWords()
+
 }
