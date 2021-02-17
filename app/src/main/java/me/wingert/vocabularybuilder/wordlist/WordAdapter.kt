@@ -1,5 +1,6 @@
 package me.wingert.vocabularybuilder.wordlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,8 @@ class WordAdapter(private val deleteClickListener: DeleteClickListener, private 
             View.VISIBLE -> slideUp(holder.definitionText)
             else -> slideDown(holder)
         }
+
+        Log.i("WordAdapter", "word clicked: $vocab")
     }
 
     private fun slideUp(view : View) {
