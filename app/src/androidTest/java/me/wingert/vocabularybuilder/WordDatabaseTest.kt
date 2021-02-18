@@ -112,7 +112,19 @@ class WordDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun testGetWordsWithNoDefinition() {
+    fun testGetDefinedWords() {
+        wordDao.getDefinedWords().observeOnce {
+            assertEquals(0, it.size)
+        }
+        wordDao.insert(VocabularyWord(word = "kika"))
+        wordDao.getDefinedWords().observeOnce {
+            assertEquals(0, it.size)
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testGetUndefinedWords() {
         wordDao.getUndefinedWords().observeOnce {
             assertEquals(0, it.size)
         }

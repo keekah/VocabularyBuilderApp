@@ -8,9 +8,9 @@
 
     <fragment
         android:id="@+id/fragment_word_list"
-        android:name="me.wingert.vocabularybuilder.wordlist.DefinedWordsFragment"
+        android:name="me.wingert.vocabularybuilder.allwords.AllWordsFragment"
         android:label="WordListFragment"
-        tools:layout="@layout/fragment_word_list">
+        tools:layout="@layout/fragment_all_words">
         <action
             android:id="@+id/action_fragment_word_list_to_undefinedWordsFragment"
             app:destination="@id/fragment_undefined_words" />

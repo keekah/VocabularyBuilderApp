@@ -1,7 +1,6 @@
-package me.wingert.vocabularybuilder.wordlist
+package me.wingert.vocabularybuilder.definedwords
 
 import android.app.Application
-import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,19 +12,7 @@ import me.wingert.vocabularybuilder.database.WordDao
 
 class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    val wordList = database.getAllWords()
-
-    fun onAdd(newWord: Editable) {
-        viewModelScope.launch {
-            addWord(newWord.toString())
-        }
-    }
-
-    private suspend fun addWord(word: String) {
-        withContext(Dispatchers.IO) {
-            database.insert(VocabularyWord(word = word))
-        }
-    }
+    val definedWords = database.getDefinedWords()
 
     fun deleteWord(vocab: VocabularyWord) {
         viewModelScope.launch {

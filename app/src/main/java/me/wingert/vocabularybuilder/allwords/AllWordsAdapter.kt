@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder.wordlist
+package me.wingert.vocabularybuilder.allwords
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
-class DefinedWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<DefinedWordsAdapter.ViewHolder>() {
+class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<AllWordsAdapter.ViewHolder>() {
 
     var data = listOf<VocabularyWord>()
         set(value) {
@@ -99,7 +99,7 @@ class DefinedWordsAdapter(private val deleteClickListener: DeleteClickListener, 
             wordText.text = item.word
 
             val resources = itemView.context.resources
-            definitionText.text = item.definition ?: resources.getString(R.string.definition_filler)
+            definitionText.text = item.definitionqqqq
         }
     }
 

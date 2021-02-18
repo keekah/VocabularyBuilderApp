@@ -61,7 +61,7 @@ class UndefinedWordsFragment : Fragment() {
     private fun initializeAdapter() {
         adapter = UndefinedWordsAdapter(UndefinedWordsAdapter.OnClickListener { onUndefinedWordClicked(it) })
 
-        binding.undefinedWordList.adapter = adapter
+        binding.undefinedWordsList.adapter = adapter
     }
 
     private fun onUndefinedWordClicked(vocab: VocabularyWord) {

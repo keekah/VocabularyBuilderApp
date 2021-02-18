@@ -6,7 +6,8 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsFragment
-import me.wingert.vocabularybuilder.wordlist.DefinedWordsFragment
+import me.wingert.vocabularybuilder.allwords.AllWordsFragment
+import me.wingert.vocabularybuilder.definedwords.DefinedWordsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        val allWordsFragment = DefinedWordsFragment()
+        val allWordsFragment = AllWordsFragment()
+        val definedWordsFragment = DefinedWordsFragment()
         val undefinedWordsFragment = UndefinedWordsFragment()
 
         setCurrentFragment(allWordsFragment)
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
+                    setCurrentFragment(definedWordsFragment)
                     Log.i("MainActivity", "Other tab selected")
                     true
                 }

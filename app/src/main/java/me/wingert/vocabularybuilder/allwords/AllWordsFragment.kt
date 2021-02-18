@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder.wordlist
+package me.wingert.vocabularybuilder.allwords
 
 import android.content.Context
 import android.os.Bundle
@@ -12,18 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.WordDatabase
-import me.wingert.vocabularybuilder.databinding.FragmentWordListBinding
+import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
 
-class DefinedWordsFragment : Fragment() {
+class AllWordsFragment : Fragment() {
 
-    private lateinit var binding : FragmentWordListBinding
-    private lateinit var viewModel : DefinedWordsViewModel
-    private lateinit var viewModelFactory : DefinedWordsViewModelFactory
-    private lateinit var adapter : DefinedWordsAdapter
+    private lateinit var binding : FragmentAllWordsBinding
+    private lateinit var viewModel : AllWordsViewModel
+    private lateinit var viewModelFactory : AllWordsViewModelFactory
+    private lateinit var adapter : AllWordsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_word_list, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_words, container, false)
 
         initializeViewModel()
 
@@ -40,16 +40,18 @@ class DefinedWordsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = WordDatabase.getInstance(application).wordDao
 
-        viewModelFactory = DefinedWordsViewModelFactory(dataSource, application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DefinedWordsViewModel::class.java)
+        viewModelFactory = AllWordsViewModelFactory(dataSource, application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(AllWordsViewModel::class.java)
 
         binding.viewModel = viewModel
     }
 
-    private fun initializeAdapter() {
-        adapter = DefinedWordsAdapter(DefinedWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, DefinedWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
 
-        binding.wordList.adapter = adapter
+    // TODO fix this OnClickListener. Do I need it? I don't think I do.
+    private fun initializeAdapter() {
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
+
+        binding.allWordsList.adapter = adapter
     }
 
     private fun setAddButtonClickListener() {
