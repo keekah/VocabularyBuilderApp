@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/all_words_tab"
+        android:enabled="true"
+        android:title="@string/all"/>
+
+    <item
+        android:id="@+id/defined_words_tab"
+        android:enabled="true"
+        android:title="@string/defined" />
+
+    <item
+        android:id="@+id/undefined_words_tab"
+        android:enabled="true"
+        android:title="@string/undefined"/>
+
+
+</menu>

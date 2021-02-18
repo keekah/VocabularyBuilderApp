@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.database.VocabularyWord
 import me.wingert.vocabularybuilder.database.WordDao
 
-class WordListViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
+class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
     val wordList = database.getAllWords()
 

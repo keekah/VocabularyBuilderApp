@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
-class WordAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<WordAdapter.ViewHolder>() {
+class DefinedWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<DefinedWordsAdapter.ViewHolder>() {
 
     var data = listOf<VocabularyWord>()
         set(value) {

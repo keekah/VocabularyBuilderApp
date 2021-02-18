@@ -14,12 +14,12 @@ import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentWordListBinding
 
-class WordListFragment : Fragment() {
+class DefinedWordsFragment : Fragment() {
 
     private lateinit var binding : FragmentWordListBinding
-    private lateinit var viewModel : WordListViewModel
-    private lateinit var viewModelFactory : WordListViewModelFactory
-    private lateinit var adapter : WordAdapter
+    private lateinit var viewModel : DefinedWordsViewModel
+    private lateinit var viewModelFactory : DefinedWordsViewModelFactory
+    private lateinit var adapter : DefinedWordsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -40,14 +40,14 @@ class WordListFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = WordDatabase.getInstance(application).wordDao
 
-        viewModelFactory = WordListViewModelFactory(dataSource, application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(WordListViewModel::class.java)
+        viewModelFactory = DefinedWordsViewModelFactory(dataSource, application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DefinedWordsViewModel::class.java)
 
         binding.viewModel = viewModel
     }
 
     private fun initializeAdapter() {
-        adapter = WordAdapter(WordAdapter.DeleteClickListener { viewModel.deleteWord(it) }, WordAdapter.OnClickListener { viewModel.onItemClick(it) })
+        adapter = DefinedWordsAdapter(DefinedWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, DefinedWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
 
         binding.wordList.adapter = adapter
     }
