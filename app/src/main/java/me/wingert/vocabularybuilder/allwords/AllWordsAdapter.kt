@@ -3,8 +3,6 @@ package me.wingert.vocabularybuilder.allwords
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationSet
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -49,32 +47,12 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
             else -> View.VISIBLE
         }
 
-        when (holder.definitionText.visibility) {
-            View.VISIBLE -> slideUp(holder.definitionText)
-            else -> slideDown(holder)
+        holder.definitionText.visibility = when (holder.definitionText.visibility) {
+            View.VISIBLE -> View.GONE
+            else -> View.VISIBLE
         }
+
     }
-
-    private fun slideUp(view : View) {
-//        val animation = TranslateAnimation(0F, 0F, 0F, -view.height.toFloat())
-//        animation.duration = 300
-//        view.startAnimation(animation)
-        view.visibility = View.GONE
-    }
-
-    private fun slideDown(holder: ViewHolder) {
-        val animationSet = AnimationSet(true)
-
-        val height = holder.definitionText.height.toFloat()
-        val bottom = holder.definitionText.height - height
-
-        val translate = TranslateAnimation(0F, 0F, -height, 0F)
-        translate.duration = 300
-
-        holder.definitionText.startAnimation(translate)
-        holder.definitionText.visibility = View.VISIBLE
-    }
-
 
 
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -94,8 +72,6 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
 
         fun bind(item: VocabularyWord) {
             wordText.text = item.word
-
-            val resources = itemView.context.resources
             definitionText.text = item.definition
         }
     }
