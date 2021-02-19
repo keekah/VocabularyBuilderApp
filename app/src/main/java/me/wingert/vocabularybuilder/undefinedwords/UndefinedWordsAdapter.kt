@@ -24,17 +24,13 @@ class UndefinedWordsAdapter(private val onClickListener: OnClickListener) : Recy
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = undefinedWords[position]
 
-        holder.itemView.setOnClickListener { itemClicked(item, holder) }
+        holder.itemView.setOnClickListener { onClickListener.onClick(item) }
 
         holder.bind(item)
     }
 
     override fun getItemCount(): Int {
         return undefinedWords.size
-    }
-
-    private fun itemClicked(vocab: VocabularyWord, holder: ViewHolder) {
-        onClickListener.onClick(vocab)
     }
 
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
