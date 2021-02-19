@@ -99,7 +99,7 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
             wordText.text = item.word
 
             val resources = itemView.context.resources
-            definitionText.text = item.definitionqqqq
+            definitionText.text = item.definition
         }
     }
 
