@@ -1,10 +1,8 @@
 package me.wingert.vocabularybuilder.undefinedwords
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.undefined_word_view.view.*
 import me.wingert.vocabularybuilder.R
@@ -38,7 +36,6 @@ class UndefinedWordsAdapter(private val onClickListener: OnClickListener) : Recy
 
     private fun itemClicked(vocab: VocabularyWord, holder: ViewHolder) {
         onClickListener.onClick(vocab)
-        Log.i("UndefWordsAdapter", "item clicked: $vocab")
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

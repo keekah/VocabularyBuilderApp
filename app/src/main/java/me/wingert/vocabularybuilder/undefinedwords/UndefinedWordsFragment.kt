@@ -1,7 +1,6 @@
 package me.wingert.vocabularybuilder.undefinedwords
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,13 +21,10 @@ class UndefinedWordsFragment : Fragment() {
     private lateinit var viewModelFactory: UndefinedWordsViewModelFactory
     private lateinit var adapter : UndefinedWordsAdapter
 
-//    private lateinit var popupWindow : PopupWindow
-//    private lateinit var popupView : View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_undefined_words, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_undefined_words, container, false)
 
         initializeViewModel()
 
@@ -41,8 +37,6 @@ class UndefinedWordsFragment : Fragment() {
                 adapter.undefinedWords = it
             }
         })
-
-//        popupView = inflater.inflate(R.layout.define_word_popup, container)
 
         return binding.root
 
@@ -65,21 +59,26 @@ class UndefinedWordsFragment : Fragment() {
     }
 
     private fun onUndefinedWordClicked(vocab: VocabularyWord) {
-        Log.i("UndefWordsFrag", "hello from the fragment. $vocab")
-
         val popupView = layoutInflater.inflate(R.layout.define_word_popup, null)
         val popupWindow = PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
         popupView.word_to_define_text.text = vocab.word
+        popupView.definition_edit_text.requestFocus()
 
         // For some reason adding .toString() to the following line doesn't work, but adding it to the parameter
         // in the line below does work.
         val definition = popupView.definition_edit_text.text
         popupView.done_button.setOnClickListener { onDoneButtonClicked(vocab, definition.toString(), popupWindow) }
+        popupView.delete_icon.setOnClickListener { onDelete(vocab, popupWindow) }
     }
 
     private fun onDoneButtonClicked(vocab: VocabularyWord, definition: String, popupWindow: PopupWindow) {
         viewModel.addDefinition(vocab, definition)
+        popupWindow.dismiss()
+    }
+
+    private fun onDelete(vocab: VocabularyWord, popupWindow: PopupWindow) {
+        viewModel.delete(vocab)
         popupWindow.dismiss()
     }
 
