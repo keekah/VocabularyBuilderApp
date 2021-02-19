@@ -15,18 +15,18 @@ import me.wingert.vocabularybuilder.databinding.FragmentDefinedWordsBinding
 
 class DefinedWordsFragment : Fragment() {
 
+    private lateinit var binding : FragmentDefinedWordsBinding
+    private lateinit var viewModel: DefinedWordsViewModel
+    private lateinit var viewModelFactory: DefinedWordsViewModelFactory
+    private lateinit var adapter : AllWordsAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding = DataBindingUtil.inflate<FragmentDefinedWordsBinding>(inflater, R.layout.fragment_defined_words, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_defined_words, container, false)
 
-        val application = requireNotNull(activity).application
-        val dataSource = WordDatabase.getInstance(application).wordDao
-        val viewModelFactory = DefinedWordsViewModelFactory(dataSource, application)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(DefinedWordsViewModel::class.java)
+        initializeViewModel()
 
-        val adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
-        binding.definedWordsList.adapter = adapter
-        binding.lifecycleOwner = viewLifecycleOwner
+        initializeAdapter()
 
         viewModel.definedWords.observe(viewLifecycleOwner, Observer {
             it?.let{
@@ -34,8 +34,18 @@ class DefinedWordsFragment : Fragment() {
             }
         })
 
-
-
         return binding.root
+    }
+
+    private fun initializeViewModel() {
+        val application = requireNotNull(activity).application
+        val dataSource = WordDatabase.getInstance(application).wordDao
+        viewModelFactory = DefinedWordsViewModelFactory(dataSource, application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DefinedWordsViewModel::class.java)
+    }
+
+    private fun initializeAdapter() {
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
+        binding.definedWordsList.adapter = adapter
     }
 }

@@ -30,8 +30,6 @@ class UndefinedWordsFragment : Fragment() {
 
         initializeAdapter()
 
-        binding.lifecycleOwner = viewLifecycleOwner
-
         viewModel.undefinedWords.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.undefinedWords = it

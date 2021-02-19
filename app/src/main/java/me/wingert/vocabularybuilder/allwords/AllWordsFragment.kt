@@ -29,8 +29,6 @@ class AllWordsFragment : Fragment() {
 
         initializeAdapter()
 
-        binding.lifecycleOwner = viewLifecycleOwner
-
         setAddButtonClickListener()
 
         return binding.root
