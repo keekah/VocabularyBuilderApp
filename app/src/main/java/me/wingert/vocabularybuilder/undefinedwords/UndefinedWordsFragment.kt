@@ -3,6 +3,7 @@ package me.wingert.vocabularybuilder.undefinedwords
 import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -51,27 +52,32 @@ class UndefinedWordsFragment : Fragment() {
     }
 
     private fun initializeAdapter() {
-        adapter = UndefinedWordsAdapter(UndefinedWordsAdapter.OnClickListener { onUndefinedWordClicked(it) })
+        adapter = UndefinedWordsAdapter(UndefinedWordsAdapter.OnClickListener { showPopup(it) })
 
         binding.undefinedWordsList.adapter = adapter
     }
 
-    private fun onUndefinedWordClicked(vocab: VocabularyWord) {
+    private fun showPopup(vocab: VocabularyWord) {
         val popupView = layoutInflater.inflate(R.layout.define_word_popup, null)
         val popupWindow = PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+
         popupView.word_to_define_text.text = vocab.word
         popupView.definition_edit_text.requestFocus()
 
-        // For some reason adding .toString() to the following line doesn't work, but adding it to the parameter
-        // in the line below does work.
-        val definition = popupView.definition_edit_text.text
-        popupView.done_button.setOnClickListener { onDoneButtonClicked(vocab, definition.toString(), popupWindow) }
+        popupView.done_button.setOnClickListener { onDoneButtonClicked(vocab, popupView, popupWindow) }
         popupView.delete_icon.setOnClickListener { onDelete(vocab, popupWindow) }
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
     }
 
-    private fun onDoneButtonClicked(vocab: VocabularyWord, definition: String, popupWindow: PopupWindow) {
-        viewModel.addDefinition(vocab, definition)
+    private fun onDoneButtonClicked(vocab: VocabularyWord, popupView: View, popupWindow: PopupWindow) {
+        val definition = popupView.definition_edit_text.text.toString().trim()
+
+        if (definition.isNotEmpty())
+            viewModel.addDefinition(vocab, definition)
+        else
+            Toast.makeText(context, "Definition must not be empty", Toast.LENGTH_SHORT).show()
+
         popupWindow.dismiss()
     }
 

@@ -15,7 +15,7 @@ class UndefinedWordsViewModel(val database: WordDao, application: Application) :
 
     fun addDefinition(vocab: VocabularyWord, definition: String) {
         viewModelScope.launch {
-            definition?.let {
+            definition.let {
                 vocab.definition = definition
                 updateWord(vocab)
             }

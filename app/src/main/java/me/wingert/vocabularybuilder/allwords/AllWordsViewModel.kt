@@ -1,7 +1,6 @@
 package me.wingert.vocabularybuilder.allwords
 
 import android.app.Application
-import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,13 +14,13 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
 
     val wordList = database.getAllWords()
 
-    fun onAdd(newWord: Editable) {
+    fun addWord(newWord: String) {
         viewModelScope.launch {
-            addWord(newWord.toString())
+            add(newWord)
         }
     }
 
-    private suspend fun addWord(word: String) {
+    private suspend fun add(word: String) {
         withContext(Dispatchers.IO) {
             database.insert(VocabularyWord(word = word))
         }

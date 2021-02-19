@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,7 +30,13 @@ class AllWordsFragment : Fragment() {
 
         initializeAdapter()
 
-        setAddButtonClickListener()
+        binding.addButton.setOnClickListener { onAdd() }
+
+        viewModel.wordList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
 
         return binding.root
     }
@@ -44,7 +51,6 @@ class AllWordsFragment : Fragment() {
         binding.viewModel = viewModel
     }
 
-
     // TODO fix this OnClickListener. Do I need it? I don't think I do.
     private fun initializeAdapter() {
         adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
@@ -52,18 +58,14 @@ class AllWordsFragment : Fragment() {
         binding.allWordsList.adapter = adapter
     }
 
-    private fun setAddButtonClickListener() {
-        binding.addButton.setOnClickListener { addWord() }
+    private fun onAdd() {
+        val word = binding.wordEdit.text.toString().trim()
 
-        viewModel.wordList.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.data = it
-            }
-        })
-    }
+        if (word.isNotEmpty())
+            viewModel.addWord(word)
+        else
+            Toast.makeText(context, "Word must not be empty.", Toast.LENGTH_SHORT).show()
 
-    private fun addWord() {
-        viewModel.onAdd(binding.wordEdit.text)
         binding.wordEdit.text.clear()
         hideKeyboard(binding.wordEdit)
     }
