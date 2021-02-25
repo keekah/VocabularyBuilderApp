@@ -5,28 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
-class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<AllWordsAdapter.ViewHolder>() {
+class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : ListAdapter<VocabularyWord, AllWordsAdapter.ViewHolder>(VocabularyDiffCallback()) {
 
-    var data = listOf<VocabularyWord>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun getItemCount(): Int {
-        return data.size
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
 
         holder.wordText.bringToFront()
         holder.deleteIcon.bringToFront()
@@ -86,5 +79,16 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
         fun onClick(vocab: VocabularyWord) {
             clickListener(vocab)
         }
+    }
+}
+
+class VocabularyDiffCallback : DiffUtil.ItemCallback<VocabularyWord>() {
+
+    override fun areItemsTheSame(oldItem: VocabularyWord, newItem: VocabularyWord): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: VocabularyWord, newItem: VocabularyWord): Boolean {
+        return oldItem == newItem
     }
 }

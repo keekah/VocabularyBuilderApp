@@ -15,6 +15,7 @@ import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
 
+
 class AllWordsFragment : Fragment() {
 
     private lateinit var binding : FragmentAllWordsBinding
@@ -34,7 +35,7 @@ class AllWordsFragment : Fragment() {
 
         viewModel.wordList.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 

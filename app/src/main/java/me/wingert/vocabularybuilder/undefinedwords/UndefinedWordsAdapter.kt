@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.undefined_word_view.view.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 
