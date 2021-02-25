@@ -1,11 +1,16 @@
 package me.wingert.vocabularybuilder.undefinedwords
 
 import android.app.Application
+import android.util.Log
+//import android.provider.Settings.Global.getString
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 import me.wingert.vocabularybuilder.database.WordDao
 

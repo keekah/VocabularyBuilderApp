@@ -31,6 +31,7 @@ class DefinedWordsFragment : Fragment() {
         viewModel.definedWords.observe(viewLifecycleOwner, Observer {
             it?.let{
                 adapter.submitList(it)
+                setHeader(it.isNullOrEmpty())
             }
         })
 
@@ -47,5 +48,12 @@ class DefinedWordsFragment : Fragment() {
     private fun initializeAdapter() {
         adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it) })
         binding.definedWordsList.adapter = adapter
+    }
+
+    private fun setHeader(isNullOrEmpty: Boolean) {
+        binding.definedWordsEmptyText.visibility = when (isNullOrEmpty) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
     }
 }

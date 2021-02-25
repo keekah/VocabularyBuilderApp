@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.define_word_popup.*
 import kotlinx.android.synthetic.main.define_word_popup.view.*
+import kotlinx.android.synthetic.main.fragment_undefined_words.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.database.VocabularyWord
 import me.wingert.vocabularybuilder.database.WordDatabase
@@ -35,6 +37,7 @@ class UndefinedWordsFragment : Fragment() {
             it?.let {
                 adapter.undefinedWords = it
             }
+            setHeader(it.isNullOrEmpty())
         })
 
         return binding.root
@@ -84,6 +87,15 @@ class UndefinedWordsFragment : Fragment() {
     private fun onDelete(vocab: VocabularyWord, popupWindow: PopupWindow) {
         viewModel.delete(vocab)
         popupWindow.dismiss()
+    }
+
+    // Set the text based on the list of undefined words.
+    private fun setHeader(isNullOrEmpty: Boolean) {
+        binding.addDefinitionText.text =
+            if (isNullOrEmpty)
+                getString(R.string.no_undefined_words)
+            else
+                getString(R.string.select_to_add_definition)
     }
 
 }

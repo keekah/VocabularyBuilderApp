@@ -7,4 +7,6 @@
     <string name="all">All</string>
     <string name="defined">Defined</string>
     <string name="undefined">Undefined</string>
+    <string name="no_undefined_words">No undefined words</string>
+    <string name="no_defined_words">No defined words</string>
 </resources>
