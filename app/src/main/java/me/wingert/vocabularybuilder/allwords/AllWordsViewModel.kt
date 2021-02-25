@@ -14,15 +14,19 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
 
     val wordList = database.getAllWords()
 
-    fun addWord(newWord: String) {
+    fun addWord(newWord: String, definition: String) {
         viewModelScope.launch {
-            add(newWord)
+            add(newWord, definition)
         }
     }
 
-    private suspend fun add(word: String) {
+    // Add the word and its definition if one was provided
+    private suspend fun add(word: String, definition: String) {
         withContext(Dispatchers.IO) {
-            database.insert(VocabularyWord(word = word))
+            if (definition.isNotEmpty())
+                database.insert(VocabularyWord(word = word, definition = definition))
+            else
+                database.insert(VocabularyWord(word = word))
         }
     }
 

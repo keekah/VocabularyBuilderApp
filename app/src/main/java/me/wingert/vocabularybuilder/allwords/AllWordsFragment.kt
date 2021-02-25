@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +33,12 @@ class AllWordsFragment : Fragment() {
         initializeAdapter()
 
         binding.addButton.setOnClickListener { onAdd() }
+
+        binding.wordEdit.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.definitionEdit.visibility = View.VISIBLE
+            }
+        }
 
         viewModel.wordList.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -61,13 +68,19 @@ class AllWordsFragment : Fragment() {
 
     private fun onAdd() {
         val word = binding.wordEdit.text.toString().trim()
+        val definition = binding.definitionEdit.text.toString().trim()
 
-        if (word.isNotEmpty())
-            viewModel.addWord(word)
-        else
+        if (word.isNotEmpty()) {
+            viewModel.addWord(word, definition)
+        }
+        else {
             Toast.makeText(context, "Word must not be empty.", Toast.LENGTH_SHORT).show()
+        }
 
+        binding.wordEdit.clearFocus()
         binding.wordEdit.text.clear()
+        binding.definitionEdit.text.clear()
+        binding.definitionEdit.visibility = View.GONE
         hideKeyboard(binding.wordEdit)
     }
 
