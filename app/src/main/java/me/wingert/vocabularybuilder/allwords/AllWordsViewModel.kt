@@ -20,11 +20,27 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
         }
     }
 
-    // Add the word and its definition if one was provided
+    // Add the word and its definition if one was provided.
+    // If the word was already stored, update its definition (appending if one already existed)
     private suspend fun add(word: String, definition: String) {
         withContext(Dispatchers.IO) {
-            if (definition.isNotEmpty())
-                database.insert(VocabularyWord(word = word, definition = definition))
+            if (definition.isNotEmpty()) {
+                var storedWord = database.getWord(word)
+
+                if (storedWord == null)
+                    database.insert(VocabularyWord(word = word, definition = definition))
+                else {
+                    if (storedWord.definition != null) {
+                        var newDef = storedWord.definition + "; " + definition
+                        storedWord.definition = newDef
+                    }
+                    else {
+                        storedWord.definition = definition
+                    }
+
+                    database.update(storedWord)
+                }
+            }
             else
                 database.insert(VocabularyWord(word = word))
         }
