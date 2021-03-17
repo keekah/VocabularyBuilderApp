@@ -15,3 +15,4 @@ data class VocabularyWord(
 
     var definition : String? = null
 )
+

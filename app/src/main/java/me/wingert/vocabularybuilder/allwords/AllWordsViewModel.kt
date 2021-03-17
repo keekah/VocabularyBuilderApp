@@ -3,16 +3,29 @@ package me.wingert.vocabularybuilder.allwords
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.wingert.vocabularybuilder.Api
+import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.database.VocabularyWord
 import me.wingert.vocabularybuilder.database.WordDao
+import java.lang.Exception
 
 class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
     val wordList = database.getAllWords()
+
+    private lateinit var _allWords : List<VocabWord>
+//    val allWords : LiveData<List<VocabularyWord>>
+//        get() = _allWords
+
+    init {
+        getVocabularyWords()
+    }
 
     fun addWord(newWord: String, definition: String) {
         viewModelScope.launch {
@@ -60,6 +73,19 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
 
     fun onItemClick(vocab: VocabularyWord) {
         Log.i("WordListViewModel", "Item clicked: $vocab")
+    }
+
+    private fun getVocabularyWords() {
+        viewModelScope.launch {
+            try {
+                _allWords = Api.retrofitService.getVocabularyWords()
+                Log.i("AllWordsVM", "Retrieved ${_allWords.size} vocabulary words")
+            }
+            catch (e: Exception) {
+                Log.i("AllWordsVM", "Error: ${e.message}")
+                _allWords = ArrayList()
+            }
+        }
     }
 
 }
