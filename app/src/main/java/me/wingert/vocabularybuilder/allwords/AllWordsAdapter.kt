@@ -9,17 +9,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
-import me.wingert.vocabularybuilder.database.VocabularyWord
+import me.wingert.vocabularybuilder.VocabWord
 
-class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : ListAdapter<VocabularyWord, AllWordsAdapter.ViewHolder>(VocabularyDiffCallback()) {
+class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<AllWordsAdapter.ViewHolder>() {
 
+    var words: List<VocabWord> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun getItemCount() = words.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = words[position]
 
         holder.wordText.bringToFront()
         holder.deleteIcon.bringToFront()
@@ -33,7 +40,7 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
         holder.bind(item)
     }
 
-    private fun itemClicked(vocab: VocabularyWord, holder: ViewHolder) {
+    private fun itemClicked(vocab: VocabWord, holder: ViewHolder) {
         onClickListener.onClick(vocab)
         holder.deleteIcon.visibility = when (holder.deleteIcon.visibility) {
             View.VISIBLE -> View.INVISIBLE
@@ -63,32 +70,32 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
             }
         }
 
-        fun bind(item: VocabularyWord) {
+        fun bind(item: VocabWord) {
             wordText.text = item.word
             definitionText.text = item.definition
         }
     }
 
     // Click on a delete icon to remove the word from the list.
-    class DeleteClickListener(val deleteClickListener: (vocab: VocabularyWord) -> Unit) {
-        fun onClick(vocab: VocabularyWord) = deleteClickListener(vocab)
+    class DeleteClickListener(val deleteClickListener: (vocab: VocabWord) -> Unit) {
+        fun onClick(vocab: VocabWord) = deleteClickListener(vocab)
     }
 
     // Click on a word to expand the view, showing definition and delete icon.
-    class OnClickListener(val clickListener: (vocab: VocabularyWord) -> Unit) {
-        fun onClick(vocab: VocabularyWord) {
+    class OnClickListener(val clickListener: (vocab: VocabWord) -> Unit) {
+        fun onClick(vocab: VocabWord) {
             clickListener(vocab)
         }
     }
 }
 
-class VocabularyDiffCallback : DiffUtil.ItemCallback<VocabularyWord>() {
+class VocabularyDiffCallback : DiffUtil.ItemCallback<VocabWord>() {
 
-    override fun areItemsTheSame(oldItem: VocabularyWord, newItem: VocabularyWord): Boolean {
+    override fun areItemsTheSame(oldItem: VocabWord, newItem: VocabWord): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: VocabularyWord, newItem: VocabularyWord): Boolean {
+    override fun areContentsTheSame(oldItem: VocabWord, newItem: VocabWord): Boolean {
         return oldItem == newItem
     }
 }

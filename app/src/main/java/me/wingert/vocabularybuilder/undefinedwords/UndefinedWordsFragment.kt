@@ -7,13 +7,10 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.define_word_popup.*
 import kotlinx.android.synthetic.main.define_word_popup.view.*
-import kotlinx.android.synthetic.main.fragment_undefined_words.*
 import me.wingert.vocabularybuilder.R
-import me.wingert.vocabularybuilder.database.VocabularyWord
+import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentUndefinedWordsBinding
 
@@ -33,12 +30,12 @@ class UndefinedWordsFragment : Fragment() {
 
         initializeAdapter()
 
-        viewModel.undefinedWords.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.undefinedWords = it
-            }
-            setHeader(it.isNullOrEmpty())
-        })
+//        viewModel.undefinedWords.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                adapter.undefinedWords = it
+//            }
+//            setHeader(it.isNullOrEmpty())
+//        })
 
         return binding.root
 
@@ -60,7 +57,7 @@ class UndefinedWordsFragment : Fragment() {
         binding.undefinedWordsList.adapter = adapter
     }
 
-    private fun showPopup(vocab: VocabularyWord) {
+    private fun showPopup(vocab: DatabaseVocabWord) {
         val popupView = layoutInflater.inflate(R.layout.define_word_popup, null)
         val popupWindow = PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
 
@@ -73,7 +70,7 @@ class UndefinedWordsFragment : Fragment() {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
     }
 
-    private fun onDoneButtonClicked(vocab: VocabularyWord, popupView: View, popupWindow: PopupWindow) {
+    private fun onDoneButtonClicked(vocab: DatabaseVocabWord, popupView: View, popupWindow: PopupWindow) {
         val definition = popupView.definition_edit_text.text.toString().trim()
 
         if (definition.isNotEmpty())
@@ -84,7 +81,7 @@ class UndefinedWordsFragment : Fragment() {
         popupWindow.dismiss()
     }
 
-    private fun onDelete(vocab: VocabularyWord, popupWindow: PopupWindow) {
+    private fun onDelete(vocab: DatabaseVocabWord, popupWindow: PopupWindow) {
         viewModel.delete(vocab)
         popupWindow.dismiss()
     }

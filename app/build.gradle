@@ -91,6 +91,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
 
     // Fit single dex file error
     implementation "androidx.multidex:multidex:2.0.1"

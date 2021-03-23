@@ -3,28 +3,45 @@ package me.wingert.vocabularybuilder.allwords
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.Api
+import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.database.VocabularyWord
+import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
+import me.wingert.vocabularybuilder.database.WordDatabase
+import java.io.IOException
 import java.lang.Exception
 
 class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    val wordList = database.getAllWords()
+//    val wordList = database.getAllWords()
 
     private lateinit var _allWords : List<VocabWord>
-//    val allWords : LiveData<List<VocabularyWord>>
+//    val allWords : LiveData<List<VocabWord>>
 //        get() = _allWords
+
+    val repository = Repository(WordDatabase.getInstance(application))
+
+    val wordList = repository.wordList
 
     init {
         getVocabularyWords()
+        refreshRepository()
+    }
+
+    private fun refreshRepository() {
+        viewModelScope.launch {
+            try {
+                repository.getAllWords()
+            }
+            catch (networkError: IOException) {
+                Log.d("AllWordsVM", "Failed to refresh repository: ${networkError.message}")
+            }
+        }
     }
 
     fun addWord(newWord: String, definition: String) {
@@ -41,7 +58,7 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
                 var storedWord = database.getWord(word)
 
                 if (storedWord == null)
-                    database.insert(VocabularyWord(word = word, definition = definition))
+                    database.insert(DatabaseVocabWord(word = word, definition = definition))
                 else {
                     if (storedWord.definition != null) {
                         var newDef = storedWord.definition + "; " + definition
@@ -55,23 +72,23 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
                 }
             }
             else
-                database.insert(VocabularyWord(word = word))
+                database.insert(DatabaseVocabWord(word = word))
         }
     }
 
-    fun deleteWord(vocab: VocabularyWord) {
+    fun deleteWord(vocab: DatabaseVocabWord) {
         viewModelScope.launch {
             delete(vocab)
         }
     }
 
-    private suspend fun delete(vocab: VocabularyWord) {
+    private suspend fun delete(vocab: DatabaseVocabWord) {
         withContext(Dispatchers.IO) {
             database.deleteWord(vocab)
         }
     }
 
-    fun onItemClick(vocab: VocabularyWord) {
+    fun onItemClick(vocab: DatabaseVocabWord) {
         Log.i("WordListViewModel", "Item clicked: $vocab")
     }
 

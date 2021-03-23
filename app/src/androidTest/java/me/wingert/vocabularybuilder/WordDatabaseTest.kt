@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import junit.framework.Assert.*
-import me.wingert.vocabularybuilder.database.VocabularyWord
+import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
 import me.wingert.vocabularybuilder.database.WordDatabase
 import org.junit.After
@@ -43,7 +43,7 @@ class WordDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun testInsert() {
-        val vocab = VocabularyWord(word = "hirsute")
+        val vocab = DatabaseVocabWord(word = "hirsute")
         wordDao.insert(vocab)
         val retrievedWord = wordDao.getWord("hirsute")
 
@@ -53,7 +53,7 @@ class WordDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun testUpdate() {
-        wordDao.insert(VocabularyWord(word = "halcyon"))
+        wordDao.insert(DatabaseVocabWord(word = "halcyon"))
 
         val vocab = wordDao.getWord("halcyon")
         val def = "denoting a period of time in the past that was idyllically happy and peaceful"
@@ -69,7 +69,7 @@ class WordDatabaseTest {
         val word = "mnemonic"
         assertNull(wordDao.getWord(word))
 
-        val vocab = VocabularyWord(word = word)
+        val vocab = DatabaseVocabWord(word = word)
         wordDao.insert(vocab)
         assertNotNull(wordDao.getWord(word))
 
@@ -81,7 +81,7 @@ class WordDatabaseTest {
     @Throws(Exception::class)
     fun testGetWord() {
         assertNull(wordDao.getWord("nascent"))
-        wordDao.insert(VocabularyWord(word = "nascent"))
+        wordDao.insert(DatabaseVocabWord(word = "nascent"))
         assertNotNull(wordDao.getWord("nascent"))
     }
 
@@ -92,9 +92,9 @@ class WordDatabaseTest {
             assertEquals(0, it.size)
         }
 
-        wordDao.insert(VocabularyWord(word = "nootropic"))
-        wordDao.insert(VocabularyWord(word = "credenza", definition = "counter"))
-        wordDao.insert(VocabularyWord(word = "excoriate"))
+        wordDao.insert(DatabaseVocabWord(word = "nootropic"))
+        wordDao.insert(DatabaseVocabWord(word = "credenza", definition = "counter"))
+        wordDao.insert(DatabaseVocabWord(word = "excoriate"))
         var vocab = wordDao.getWord("excoriate")
         vocab?.definition = "censure or criticize severely"
         wordDao.update(vocab!!)
@@ -116,7 +116,7 @@ class WordDatabaseTest {
         wordDao.getDefinedWords().observeOnce {
             assertEquals(0, it.size)
         }
-        wordDao.insert(VocabularyWord(word = "kika"))
+        wordDao.insert(DatabaseVocabWord(word = "kika"))
         wordDao.getDefinedWords().observeOnce {
             assertEquals(0, it.size)
         }
@@ -128,7 +128,7 @@ class WordDatabaseTest {
         wordDao.getUndefinedWords().observeOnce {
             assertEquals(0, it.size)
         }
-        wordDao.insert(VocabularyWord(word ="loosies"))
+        wordDao.insert(DatabaseVocabWord(word ="loosies"))
         wordDao.getUndefinedWords().observeOnce {
             assertEquals(1, it.size)
         }

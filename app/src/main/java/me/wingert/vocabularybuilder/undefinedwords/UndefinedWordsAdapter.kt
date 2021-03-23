@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
-import me.wingert.vocabularybuilder.database.VocabularyWord
+import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 
 class UndefinedWordsAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<UndefinedWordsAdapter.ViewHolder>() {
 
-    var undefinedWords = listOf<VocabularyWord>()
+    var undefinedWords = listOf<DatabaseVocabWord>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -46,14 +46,14 @@ class UndefinedWordsAdapter(private val onClickListener: OnClickListener) : Recy
             }
         }
 
-        fun bind(item: VocabularyWord) {
+        fun bind(item: DatabaseVocabWord) {
             undefinedWordText.text = item.word
         }
 
     }
 
-    class OnClickListener(val clickListener: (vocab: VocabularyWord) -> Unit) {
-        fun onClick(vocab: VocabularyWord) {
+    class OnClickListener(val clickListener: (vocab: DatabaseVocabWord) -> Unit) {
+        fun onClick(vocab: DatabaseVocabWord) {
             clickListener(vocab)
         }
     }

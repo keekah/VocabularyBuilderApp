@@ -7,23 +7,23 @@ import androidx.room.*
 interface WordDao {
 
     @Insert
-    fun insert(word: VocabularyWord)
+    fun insert(word: DatabaseVocabWord)
 
     @Update
-    fun update(word: VocabularyWord)
+    fun update(word: DatabaseVocabWord)
 
     @Delete
-    fun deleteWord(word: VocabularyWord)
+    fun deleteWord(word: DatabaseVocabWord)
 
     @Query("SELECT * FROM vocabulary_words WHERE word = :word")
-    fun getWord(word: String) : VocabularyWord?
+    fun getWord(word: String) : DatabaseVocabWord?
 
     @Query("SELECT * FROM vocabulary_words ORDER BY id DESC")
-    fun getAllWords() : LiveData<List<VocabularyWord>>
+    fun getAllWords() : LiveData<List<DatabaseVocabWord>>
 
     @Query("SELECT * FROM vocabulary_words WHERE definition IS NOT NULL ORDER BY id DESC")
-    fun getDefinedWords() : LiveData<List<VocabularyWord>>
+    fun getDefinedWords() : LiveData<List<DatabaseVocabWord>>
 
     @Query("SELECT * FROM vocabulary_words WHERE definition IS NULL ORDER BY id DESC")
-    fun getUndefinedWords() : LiveData<List<VocabularyWord>>
+    fun getUndefinedWords() : LiveData<List<DatabaseVocabWord>>
 }
