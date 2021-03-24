@@ -7,12 +7,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
+import me.wingert.vocabularybuilder.database.WordDatabase
 
 class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    val definedWords = database.getDefinedWords()
+    val repository = Repository(WordDatabase.getInstance(application))
+
+    val definedWords = repository.definedWords
 
     fun deleteWord(vocab: DatabaseVocabWord) {
         viewModelScope.launch {

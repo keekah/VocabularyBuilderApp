@@ -7,12 +7,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
+import me.wingert.vocabularybuilder.database.WordDatabase
 
 class UndefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    val undefinedWords = database.getUndefinedWords()
+//    val undefinedWords = database.getUndefinedWords()
+    val repository = Repository(WordDatabase.getInstance(application))
+    val undefinedWords = repository.undefinedWords
 
     fun addDefinition(vocab: DatabaseVocabWord, definition: String) {
         viewModelScope.launch {

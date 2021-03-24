@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
+import me.wingert.vocabularybuilder.asDatabaseVocabWord
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
@@ -74,7 +75,7 @@ class AllWordsFragment : Fragment() {
     // TODO fix this OnClickListener. Do I need it? I don't think I do.
     // TODO fix these casts (and their equivalents in the other fragments) -- they break the app, i.e. the click listeners do not work right now
     private fun initializeAdapter() {
-        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it as DatabaseVocabWord) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(it as DatabaseVocabWord) })
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(asDatabaseVocabWord(it)) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
 
         binding.allWordsList.adapter = adapter
     }

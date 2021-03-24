@@ -26,7 +26,7 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
 
     val repository = Repository(WordDatabase.getInstance(application))
 
-    val wordList = repository.wordList
+    val wordList = repository.allWords
 
     init {
         getVocabularyWords()

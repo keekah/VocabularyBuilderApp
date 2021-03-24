@@ -11,7 +11,15 @@ import me.wingert.vocabularybuilder.database.asDomainModel
 
 class Repository(private val database: WordDatabase) {
 
-    val wordList: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getAllWords()) {
+    val allWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getAllWords()) {
+        it.asDomainModel()
+    }
+
+    val definedWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getDefinedWords()) {
+        it.asDomainModel()
+    }
+
+    val undefinedWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getUndefinedWords()) {
         it.asDomainModel()
     }
 
@@ -21,9 +29,12 @@ class Repository(private val database: WordDatabase) {
 
             for (word in wordList)
             {
-                database.wordDao.insert(DatabaseVocabWord(id = word.id, word = word.word, definition = word.definition))
-                Log.i("Repository", "$word.id  $word.word $word.definition")
+                if (database.wordDao.getWord(word.id) == null) {
+                    database.wordDao.insert(DatabaseVocabWord(word.id, word.word, word.definition))
+                    Log.i("Repository", "$word.id  $word.word $word.definition")
+                }
             }
         }
     }
+
 }

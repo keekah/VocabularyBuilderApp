@@ -9,11 +9,17 @@ interface WordDao {
     @Insert
     fun insert(word: DatabaseVocabWord)
 
+    @Insert
+    fun insertAll(words: List<DatabaseVocabWord>)
+
     @Update
     fun update(word: DatabaseVocabWord)
 
     @Delete
     fun deleteWord(word: DatabaseVocabWord)
+
+    @Query("SELECT * FROM vocabulary_words WHERE id = :id")
+    fun getWord(id: Int) : DatabaseVocabWord?
 
     @Query("SELECT * FROM vocabulary_words WHERE word = :word")
     fun getWord(word: String) : DatabaseVocabWord?
