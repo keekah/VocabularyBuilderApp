@@ -34,8 +34,8 @@ class DefinedWordsFragment : Fragment() {
         viewModel.definedWords.observe(viewLifecycleOwner, Observer<List<VocabWord>> {words ->
             words?.apply {
                 adapter?.words = words
-                setHeader(viewModel.definedWords.value.isNullOrEmpty())
-        }
+                setHeader(words.isNullOrEmpty())
+            }
         })
 
         return binding.root
