@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.Api
+import me.wingert.vocabularybuilder.Post
 import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
@@ -44,9 +45,22 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
         }
     }
 
-    fun addWord(newWord: String, definition: String) {
+//    fun addWord(newWord: String, definition: String) {
+//        viewModelScope.launch {
+//            add(newWord, definition)
+//        }
+//    }
+
+    fun addWord(word: String, definition: String) {
+        Log.d("AWVM", "addWord called")
         viewModelScope.launch {
-            add(newWord, definition)
+            try {
+                Api.retrofitService.savePost(Post(903, word, definition))
+                Log.d("AllWordsVM", "post saved: $word $definition")
+            }
+            catch (e: Exception) {
+                Log.d("AllWordsVM", "${e.message}")
+            }
         }
     }
 

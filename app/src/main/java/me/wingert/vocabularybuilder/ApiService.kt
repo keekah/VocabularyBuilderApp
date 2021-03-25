@@ -2,9 +2,10 @@ package me.wingert.vocabularybuilder
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
+import retrofit2.http.*
 
 private const val BASE_URL = "http://10.0.2.2:8080/"
 
@@ -20,6 +21,10 @@ private val retrofit = Retrofit.Builder()
 interface ApiService {
     @GET("vocabulary-words")
     suspend fun getVocabularyWords(): List<VocabWord>
+
+    @Headers("Content-Type: application/json")
+    @POST("/new-word")
+    suspend fun savePost(@Body newWord: Post) : Post
 }
 
 object Api {

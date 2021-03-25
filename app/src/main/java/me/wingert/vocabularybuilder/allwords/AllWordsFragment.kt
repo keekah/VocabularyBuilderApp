@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import me.wingert.vocabularybuilder.Api
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
@@ -80,15 +81,17 @@ class AllWordsFragment : Fragment() {
         binding.allWordsList.adapter = adapter
     }
 
+
     private fun onAdd() {
         val word = binding.wordEdit.text.toString().trim()
         val definition = binding.definitionEdit.text.toString().trim()
 
         if (word.isNotEmpty()) {
             viewModel.addWord(word, definition)
+            Toast.makeText(context, "Sending post $word + $definition", Toast.LENGTH_SHORT).show()
         }
         else {
-            Toast.makeText(context, "Word must not be empty.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Word must not be empty", Toast.LENGTH_SHORT).show()
         }
 
         binding.wordEdit.clearFocus()
@@ -97,6 +100,26 @@ class AllWordsFragment : Fragment() {
         binding.definitionEdit.visibility = View.GONE
         hideKeyboard(binding.wordEdit)
     }
+
+
+    // Saving the old method while i develop the new method
+//    private fun onAdd() {
+//        val word = binding.wordEdit.text.toString().trim()
+//        val definition = binding.definitionEdit.text.toString().trim()
+//
+//        if (word.isNotEmpty()) {
+//            viewModel.addWord(word, definition)
+//        }
+//        else {
+//            Toast.makeText(context, "Word must not be empty.", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        binding.wordEdit.clearFocus()
+//        binding.wordEdit.text.clear()
+//        binding.definitionEdit.text.clear()
+//        binding.definitionEdit.visibility = View.GONE
+//        hideKeyboard(binding.wordEdit)
+//    }
 
     private fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
