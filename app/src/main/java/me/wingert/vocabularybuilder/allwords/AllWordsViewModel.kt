@@ -51,11 +51,15 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
 //        }
 //    }
 
-    fun addWord(word: String, definition: String) {
+    fun addWord(word: String, definition: String?) {
         Log.d("AWVM", "addWord called")
         viewModelScope.launch {
             try {
-                Api.retrofitService.savePost(Post(903, word, definition))
+                if (definition.isNullOrEmpty())
+                    Api.retrofitService.savePost(Post(903, word, null))
+
+                else
+                    Api.retrofitService.savePost(Post(903, word, definition))
                 Log.d("AllWordsVM", "post saved: $word $definition")
             }
             catch (e: Exception) {
