@@ -20,6 +20,11 @@ public class Post {
         this.definition = definition;
     }
 
+    public Post(String word, String definition) {
+        this.word = word;
+        this.definition = definition;
+    }
+
     public int getId() {
         return id;
     }
@@ -44,6 +49,8 @@ public class Post {
         this.definition = definition;
     }
 
-
+    public String toString() {
+        return "Post(" + id + " " + word + ": " + definition + ")";
+    }
 
 }
