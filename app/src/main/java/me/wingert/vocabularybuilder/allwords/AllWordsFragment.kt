@@ -54,12 +54,6 @@ class AllWordsFragment : Fragment() {
             }
         }
 
-//        viewModel.wordList.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                adapter.submitList(it)
-//            }
-//        })
-
         return binding.root
     }
 
@@ -76,19 +70,17 @@ class AllWordsFragment : Fragment() {
     // TODO fix this OnClickListener. Do I need it? I don't think I do.
     // TODO fix these casts (and their equivalents in the other fragments) -- they break the app, i.e. the click listeners do not work right now
     private fun initializeAdapter() {
-        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(asDatabaseVocabWord(it)) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
 
         binding.allWordsList.adapter = adapter
     }
 
-
     private fun onAdd() {
-        val word = binding.wordEdit.text.toString().trim()
-        val definition = binding.definitionEdit.text.toString().trim()
+        val word = binding.wordEdit.text.toString().trim().toLowerCase()
+        val definition = binding.definitionEdit.text.toString().trim().toLowerCase()
 
         if (word.isNotEmpty()) {
             viewModel.addWord(word, definition)
-            Toast.makeText(context, "Sending post $word + $definition", Toast.LENGTH_SHORT).show()
         }
         else {
             Toast.makeText(context, "Word must not be empty", Toast.LENGTH_SHORT).show()
@@ -100,26 +92,6 @@ class AllWordsFragment : Fragment() {
         binding.definitionEdit.visibility = View.GONE
         hideKeyboard(binding.wordEdit)
     }
-
-
-    // Saving the old method while i develop the new method
-//    private fun onAdd() {
-//        val word = binding.wordEdit.text.toString().trim()
-//        val definition = binding.definitionEdit.text.toString().trim()
-//
-//        if (word.isNotEmpty()) {
-//            viewModel.addWord(word, definition)
-//        }
-//        else {
-//            Toast.makeText(context, "Word must not be empty.", Toast.LENGTH_SHORT).show()
-//        }
-//
-//        binding.wordEdit.clearFocus()
-//        binding.wordEdit.text.clear()
-//        binding.definitionEdit.text.clear()
-//        binding.definitionEdit.visibility = View.GONE
-//        hideKeyboard(binding.wordEdit)
-//    }
 
     private fun hideKeyboard(view: View) {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

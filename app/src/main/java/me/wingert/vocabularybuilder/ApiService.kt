@@ -2,7 +2,6 @@ package me.wingert.vocabularybuilder
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -24,7 +23,10 @@ interface ApiService {
 
     @Headers("Content-Type: application/json")
     @POST("/new-word")
-    suspend fun savePost(@Body newWord: Post) : Post
+    suspend fun addWord(@Body newWord: NetworkVocabWord) : VocabWord
+
+    @DELETE("/vocabulary-words/{id}")
+    suspend fun deleteWord(@Path("id") id: Int)
 }
 
 object Api {

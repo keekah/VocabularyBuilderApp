@@ -8,7 +8,7 @@ data class VocabWord(
 
     val word : String?,
 
-    val definition : String? = null
+    var definition : String? = null
 )
 
 fun asDatabaseVocabWord(vocab: VocabWord) : DatabaseVocabWord {

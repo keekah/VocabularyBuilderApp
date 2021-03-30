@@ -1,9 +1,8 @@
 package me.wingert.vocabularybuilder;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Post {
+public class NetworkVocabWord {
 
     @SerializedName("id")
     public int id;
@@ -14,13 +13,13 @@ public class Post {
     @SerializedName("definition")
     public String definition;
 
-    public Post(int id, String word, String definition) {
+    public NetworkVocabWord(int id, String word, String definition) {
         this.id = id;
         this.word = word;
         this.definition = definition;
     }
 
-    public Post(String word, String definition) {
+    public NetworkVocabWord(String word, String definition) {
         this.word = word;
         this.definition = definition;
     }
