@@ -40,14 +40,10 @@ class Repository(private val database: WordDatabase) {
     }
 
     // Adds the word to the database for the first time.
-    suspend fun addWord(word: String, definition: String?) {
+    suspend fun addWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
-            var vocabWord =
-                if (definition.isNullOrEmpty()) NetworkVocabWord(word, null)
-                else NetworkVocabWord(word, definition)
-
             try {
-                retrofitService.addWord(vocabWord)
+                retrofitService.addWord(asNetworkVocabWord(vocabWord))
             }
             catch (e: NetworkErrorException) {
                 Log.d("Repository", "Failed to add word: $vocabWord. ${e.message}")

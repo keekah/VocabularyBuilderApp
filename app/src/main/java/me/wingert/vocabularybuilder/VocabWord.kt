@@ -14,3 +14,8 @@ data class VocabWord(
 fun asDatabaseVocabWord(vocab: VocabWord) : DatabaseVocabWord {
     return DatabaseVocabWord(vocab.id, vocab.word, vocab.definition)
 }
+
+fun asNetworkVocabWord(vocab: VocabWord) : NetworkVocabWord {
+    return NetworkVocabWord(vocab.id, vocab.word, vocab.definition)
+}
+

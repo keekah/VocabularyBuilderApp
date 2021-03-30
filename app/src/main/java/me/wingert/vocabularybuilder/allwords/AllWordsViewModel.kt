@@ -54,7 +54,11 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
     fun addWord(word: String, definition: String?) {
         Log.d("AWVM", "addWord called")
         viewModelScope.launch {
-            repository.addWord(word, definition)
+            val vocabWord =
+                if (definition.isNullOrEmpty()) VocabWord(word = word, definition = null)
+                else VocabWord(word = word, definition = definition)
+
+            repository.addWord(vocabWord)
         }
     }
 
