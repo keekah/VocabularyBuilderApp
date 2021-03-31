@@ -27,6 +27,10 @@ interface ApiService {
 
     @DELETE("/vocabulary-words/{id}")
     suspend fun deleteWord(@Path("id") id: Int)
+
+    @Headers("Content-Type: application/json ")
+    @PUT("/vocabulary-words")
+    suspend fun updateWord(@Body vocabWord: NetworkVocabWord) : VocabWord
 }
 
 object Api {

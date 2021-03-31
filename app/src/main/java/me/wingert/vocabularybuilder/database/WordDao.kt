@@ -32,4 +32,8 @@ interface WordDao {
 
     @Query("SELECT * FROM vocabulary_words WHERE definition IS NULL ORDER BY id DESC")
     fun getUndefinedWords() : LiveData<List<DatabaseVocabWord>>
+
+    @Query("DELETE FROM vocabulary_words")
+    fun clear()
+
 }

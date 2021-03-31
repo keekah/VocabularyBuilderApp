@@ -27,8 +27,8 @@ class Repository(private val database: WordDatabase) {
 
     suspend fun getAllWords() {
         withContext(Dispatchers.IO) {
+            database.wordDao.clear()
             val wordList = retrofitService.getVocabularyWords()
-
             for (word in wordList)
             {
                 if (database.wordDao.getWord(word.id) == null) {
@@ -43,6 +43,7 @@ class Repository(private val database: WordDatabase) {
     suspend fun addWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
             try {
+
                 retrofitService.addWord(asNetworkVocabWord(vocabWord))
             }
             catch (e: NetworkErrorException) {
@@ -60,6 +61,19 @@ class Repository(private val database: WordDatabase) {
             }
             catch (e: Exception) {
                 Log.d("Repository", "Error deleting word: $vocabWord: $e.message")
+            }
+        }
+    }
+
+    suspend fun updateWord(vocabWord: VocabWord) {
+        withContext(Dispatchers.IO) {
+            try {
+                val updatedWord = retrofitService.updateWord(asNetworkVocabWord(vocabWord))
+                getAllWords()
+                Log.d("Repository", "$updatedWord")
+            }
+            catch (e: NetworkErrorException) {
+                Log.d("Repository", "Failed to update word: $vocabWord. ${e.message}")
             }
         }
     }

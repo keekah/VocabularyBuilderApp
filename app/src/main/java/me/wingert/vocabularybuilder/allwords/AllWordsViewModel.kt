@@ -58,7 +58,7 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
                 if (definition.isNullOrEmpty()) VocabWord(word = word, definition = null)
                 else VocabWord(word = word, definition = definition)
 
-            repository.addWord(vocabWord)
+            repository.updateWord(vocabWord)
         }
     }
 
