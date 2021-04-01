@@ -8,42 +8,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.Repository
+import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
 import me.wingert.vocabularybuilder.database.WordDatabase
 
 class UndefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-//    val undefinedWords = database.getUndefinedWords()
-    val repository = Repository(WordDatabase.getInstance(application))
+    private val repository = Repository(WordDatabase.getInstance(application))
     val undefinedWords = repository.undefinedWords
 
-    fun addDefinition(vocab: DatabaseVocabWord, definition: String) {
+    fun addDefinition(vocabWord: VocabWord, definition: String) {
         viewModelScope.launch {
-            definition.let {
-                vocab.definition = definition
-                updateWord(vocab)
-            }
-
+            vocabWord.definition = definition
+            repository.updateWord(vocabWord)
         }
     }
 
-    private suspend fun updateWord(vocab: DatabaseVocabWord) {
-        withContext(Dispatchers.IO) {
-            database.update(vocab)
-        }
-
-    }
-
-    fun delete(vocab: DatabaseVocabWord) {
+    fun deleteWord(vocabWord: VocabWord) {
         viewModelScope.launch {
-            deleteWord(vocab)
-        }
-    }
-
-    private suspend fun deleteWord(vocab: DatabaseVocabWord) {
-        withContext(Dispatchers.IO) {
-            database.deleteWord(vocab)
+            repository.deleteWord(vocabWord)
         }
     }
 }

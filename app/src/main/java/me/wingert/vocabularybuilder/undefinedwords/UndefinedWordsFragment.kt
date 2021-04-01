@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.define_word_popup.view.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.asDatabaseVocabWord
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentUndefinedWordsBinding
 
@@ -73,19 +71,19 @@ class UndefinedWordsFragment : Fragment() {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
     }
 
-    private fun onDoneButtonClicked(vocab: VocabWord, popupView: View, popupWindow: PopupWindow) {
-        val definition = popupView.definition_edit_text.text.toString().trim()
+    private fun onDoneButtonClicked(vocabWord: VocabWord, popupView: View, popupWindow: PopupWindow) {
+        val definition = popupView.definition_edit_text.text.toString().trim().toLowerCase()
 
         if (definition.isNotEmpty())
-            viewModel.addDefinition(asDatabaseVocabWord(vocab), definition)
+            viewModel.addDefinition(vocabWord, definition)
         else
             Toast.makeText(context, "Definition must not be empty", Toast.LENGTH_SHORT).show()
 
         popupWindow.dismiss()
     }
 
-    private fun onDelete(vocab: VocabWord, popupWindow: PopupWindow) {
-        viewModel.delete(asDatabaseVocabWord(vocab))
+    private fun onDelete(vocabWord: VocabWord, popupWindow: PopupWindow) {
+        viewModel.deleteWord(vocabWord)
         popupWindow.dismiss()
     }
 
