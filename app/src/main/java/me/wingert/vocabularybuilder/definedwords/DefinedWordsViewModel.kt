@@ -3,13 +3,10 @@ package me.wingert.vocabularybuilder.definedwords
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.Repository
+import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDao
 import me.wingert.vocabularybuilder.database.WordDatabase
@@ -17,18 +14,11 @@ import me.wingert.vocabularybuilder.database.WordDatabase
 class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(WordDatabase.getInstance(application))
+    val wordListDefined = repository.definedWords
 
-    val definedWords = repository.definedWords
-
-    fun deleteWord(vocab: DatabaseVocabWord) {
+    fun deleteWord(vocabWord: VocabWord) {
         viewModelScope.launch {
-            delete(vocab)
-        }
-    }
-
-    private suspend fun delete(vocab: DatabaseVocabWord) {
-        withContext(Dispatchers.IO) {
-            database.deleteWord(vocab)
+            repository.deleteWord(vocabWord)
         }
     }
 

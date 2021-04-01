@@ -12,7 +12,6 @@ import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.allwords.AllWordsAdapter
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentDefinedWordsBinding
 
@@ -31,7 +30,7 @@ class DefinedWordsFragment : Fragment() {
 
         initializeAdapter()
 
-        viewModel.definedWords.observe(viewLifecycleOwner, Observer<List<VocabWord>> {words ->
+        viewModel.wordListDefined.observe(viewLifecycleOwner, Observer<List<VocabWord>> { words ->
             words?.apply {
                 adapter?.words = words
                 setHeader(words.isNullOrEmpty())
@@ -49,7 +48,7 @@ class DefinedWordsFragment : Fragment() {
     }
 
     private fun initializeAdapter() {
-        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(asDatabaseVocabWord(it)) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
         binding.definedWordsList.adapter = adapter
     }
 
