@@ -11,11 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import me.wingert.vocabularybuilder.Api
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 import me.wingert.vocabularybuilder.database.WordDatabase
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
 
@@ -30,10 +28,10 @@ class AllWordsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.wordList.observe(viewLifecycleOwner, Observer<List<VocabWord>> {
+        viewModel.wordListAll.observe(viewLifecycleOwner, Observer<List<VocabWord>> {
             words -> words?.apply {
                 adapter?.words = words
-        }
+            }
         })
 
     }

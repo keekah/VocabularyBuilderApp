@@ -27,6 +27,10 @@ interface WordDao {
     @Query("SELECT * FROM vocabulary_words ORDER BY id DESC")
     fun getAllWords() : LiveData<List<DatabaseVocabWord>>
 
+    // To be used when comparing local cache with network result
+    @Query("SELECT * FROM vocabulary_words ORDER BY id DESC")
+    fun getWords() : List<DatabaseVocabWord>
+
     @Query("SELECT * FROM vocabulary_words WHERE definition IS NOT NULL ORDER BY id DESC")
     fun getDefinedWords() : LiveData<List<DatabaseVocabWord>>
 

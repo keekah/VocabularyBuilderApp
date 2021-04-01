@@ -6,7 +6,7 @@ data class VocabWord(
 
     val id: Int = 0,
 
-    val word : String?,
+    val word : String,
 
     var definition : String? = null
 )

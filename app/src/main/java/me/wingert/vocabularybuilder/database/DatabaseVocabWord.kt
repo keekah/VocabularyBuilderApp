@@ -12,7 +12,7 @@ data class DatabaseVocabWord(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
-    var word : String?,
+    var word : String,
 
     var definition : String? = null
 )

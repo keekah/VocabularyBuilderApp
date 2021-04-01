@@ -25,8 +25,8 @@ interface ApiService {
     @POST("/new-word")
     suspend fun addWord(@Body newWord: NetworkVocabWord) : VocabWord
 
-    @DELETE("/vocabulary-words/{id}")
-    suspend fun deleteWord(@Path("id") id: Int)
+    @DELETE("/vocabulary-words")
+    suspend fun deleteWord(@Query(value = "word") word: String)
 
     @Headers("Content-Type: application/json ")
     @PUT("/vocabulary-words")
