@@ -96,4 +96,9 @@ dependencies {
     // Fit single dex file error
     implementation "androidx.multidex:multidex:2.0.1"
 
+    // Firebase Authentication
+    implementation "com.firebaseui:firebase-ui-auth:5.0.0"
+
 }
+
+apply plugin: 'com.google.gms.google-services'
