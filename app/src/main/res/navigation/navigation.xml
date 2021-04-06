@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation.xml"
-    app:startDestination="@id/fragment_word_list">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/fragment_word_list"
@@ -20,5 +20,10 @@
         android:name="me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsFragment"
         android:label="UndefinedWordsFragment"
         tools:layout="@layout/fragment_undefined_words" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="me.wingert.vocabularybuilder.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"/>
 
 </navigation>

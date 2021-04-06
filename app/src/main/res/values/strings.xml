@@ -12,4 +12,5 @@
     <string name="enter_a_word">Enter a word</string>
     <string name="add">Add</string>
     <string name="enter_a_definition">Enter its definition (optional)</string>
+    <string name="login_button_text">Login</string>
 </resources>
