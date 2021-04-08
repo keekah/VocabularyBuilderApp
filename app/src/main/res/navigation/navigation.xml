@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation.xml"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/fragment_login">
 
     <fragment
-        android:id="@+id/fragment_word_list"
+        android:id="@+id/fragment_all_words"
         android:name="me.wingert.vocabularybuilder.allwords.AllWordsFragment"
         android:label="WordListFragment"
         tools:layout="@layout/fragment_all_words">
@@ -21,9 +21,13 @@
         android:label="UndefinedWordsFragment"
         tools:layout="@layout/fragment_undefined_words" />
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/fragment_login"
         android:name="me.wingert.vocabularybuilder.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_fragment_all_words"
+            app:destination="@id/fragment_all_words" />
+    </fragment>
 
 </navigation>

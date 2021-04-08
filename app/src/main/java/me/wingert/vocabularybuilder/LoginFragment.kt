@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -58,10 +59,12 @@ class LoginFragment : Fragment() {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     binding.authButton.text = "Logout"
                     binding.authButton.setOnClickListener { AuthUI.getInstance().signOut(requireContext()) }
+                    findNavController().navigate(R.id.fragment_all_words)
                 }
                 else -> {
                     binding.authButton.text = "Login"
                     binding.authButton.setOnClickListener { launchSignInFlow() }
+                    findNavController().navigate(R.id.fragment_login)
                 }
             }
         })

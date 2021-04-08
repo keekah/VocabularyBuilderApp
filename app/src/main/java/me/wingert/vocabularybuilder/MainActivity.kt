@@ -21,9 +21,7 @@ class MainActivity : AppCompatActivity() {
         val allWordsFragment = AllWordsFragment()
         val definedWordsFragment = DefinedWordsFragment()
         val undefinedWordsFragment = UndefinedWordsFragment()
-        val loginFragment = LoginFragment()
 
-        setCurrentFragment(loginFragment)
 
         val bottomNavigationView : BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
