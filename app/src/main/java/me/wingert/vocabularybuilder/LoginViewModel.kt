@@ -12,8 +12,9 @@ class LoginViewModel : ViewModel() {
     }
 
     val authenticationState : LiveData<AuthenticationState> = Transformations.map (FirebaseUserLiveData()) { user  ->
-        if (user != null)
+        if (user != null) {
             AuthenticationState.AUTHENTICATED
+        }
         else
             AuthenticationState.UNAUTHENTICATED
     }

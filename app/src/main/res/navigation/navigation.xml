@@ -10,11 +10,7 @@
         android:id="@+id/fragment_all_words"
         android:name="me.wingert.vocabularybuilder.allwords.AllWordsFragment"
         android:label="WordListFragment"
-        tools:layout="@layout/fragment_all_words">
-        <action
-            android:id="@+id/action_fragment_word_list_to_undefinedWordsFragment"
-            app:destination="@id/fragment_undefined_words" />
-    </fragment>
+        tools:layout="@layout/fragment_all_words"/>
     <fragment
         android:id="@+id/fragment_undefined_words"
         android:name="me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsFragment"
@@ -24,10 +20,6 @@
         android:id="@+id/fragment_login"
         android:name="me.wingert.vocabularybuilder.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_fragment_all_words"
-            app:destination="@id/fragment_all_words" />
-    </fragment>
+        tools:layout="@layout/fragment_login"/>
 
 </navigation>
