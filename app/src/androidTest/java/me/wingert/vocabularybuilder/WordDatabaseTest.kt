@@ -6,9 +6,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import junit.framework.Assert.*
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
-import me.wingert.vocabularybuilder.database.WordDao
-import me.wingert.vocabularybuilder.database.WordDatabase
+import me.wingert.vocabularybuilder.room.DatabaseVocabWord
+import me.wingert.vocabularybuilder.room.Dao
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -20,8 +20,8 @@ import java.lang.Exception
 @RunWith(AndroidJUnit4::class)
 class WordDatabaseTest {
 
-    private lateinit var wordDao : WordDao
-    private lateinit var database : WordDatabase
+    private lateinit var wordDao : Dao
+    private lateinit var database : VocabularyBuilderDB
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,7 +30,7 @@ class WordDatabaseTest {
     fun createDatabase() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        database = Room.inMemoryDatabaseBuilder(context, WordDatabase::class.java).allowMainThreadQueries().build()
+        database = Room.inMemoryDatabaseBuilder(context, VocabularyBuilderDB::class.java).allowMainThreadQueries().build()
         wordDao = database.wordDao
     }
 

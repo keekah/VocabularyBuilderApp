@@ -10,12 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.firebase.ui.auth.AuthUI
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
-import me.wingert.vocabularybuilder.database.WordDatabase
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
 
 
@@ -75,7 +74,7 @@ class AllWordsFragment : Fragment() {
 
     private fun initializeViewModel() {
         val application = requireNotNull(this.activity).application
-        val dataSource = WordDatabase.getInstance(application).wordDao
+        val dataSource = VocabularyBuilderDB.getInstance(application).wordDao
 
         viewModelFactory = AllWordsViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(AllWordsViewModel::class.java)

@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
-import me.wingert.vocabularybuilder.database.WordDao
-import me.wingert.vocabularybuilder.database.WordDatabase
+import me.wingert.vocabularybuilder.room.DatabaseVocabWord
+import me.wingert.vocabularybuilder.room.Dao
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 
-class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
+class DefinedWordsViewModel(val database: Dao, application: Application) : AndroidViewModel(application) {
 
-    private val repository = Repository(WordDatabase.getInstance(application))
+    private val repository = Repository(VocabularyBuilderDB.getInstance(application))
     val wordListDefined = repository.definedWords
 
     fun deleteWord(vocabWord: VocabWord) {

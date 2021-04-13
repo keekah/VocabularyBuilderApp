@@ -7,10 +7,10 @@ import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.wingert.vocabularybuilder.Api.retrofitService
-import me.wingert.vocabularybuilder.database.WordDatabase
-import me.wingert.vocabularybuilder.database.asDomainModel
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
+import me.wingert.vocabularybuilder.room.asDomainModel
 
-class Repository(private val database: WordDatabase) {
+class Repository(private val database: VocabularyBuilderDB) {
 
     val allWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getAllWords()) {
         it.asDomainModel()

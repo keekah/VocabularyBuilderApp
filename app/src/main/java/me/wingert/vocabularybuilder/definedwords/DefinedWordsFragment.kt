@@ -12,7 +12,7 @@ import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.allwords.AllWordsAdapter
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
-import me.wingert.vocabularybuilder.database.WordDatabase
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentDefinedWordsBinding
 
 class DefinedWordsFragment : Fragment() {
@@ -42,7 +42,7 @@ class DefinedWordsFragment : Fragment() {
 
     private fun initializeViewModel() {
         val application = requireNotNull(activity).application
-        val dataSource = WordDatabase.getInstance(application).wordDao
+        val dataSource = VocabularyBuilderDB.getInstance(application).wordDao
         viewModelFactory = DefinedWordsViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DefinedWordsViewModel::class.java)
     }

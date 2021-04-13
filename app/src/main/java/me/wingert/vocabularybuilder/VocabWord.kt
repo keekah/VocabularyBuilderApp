@@ -1,6 +1,6 @@
 package me.wingert.vocabularybuilder
 
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
+import me.wingert.vocabularybuilder.room.DatabaseVocabWord
 
 data class VocabWord(
 

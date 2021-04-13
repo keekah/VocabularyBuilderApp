@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder.database
+package me.wingert.vocabularybuilder.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

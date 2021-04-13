@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder.database
+package me.wingert.vocabularybuilder.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -39,5 +39,10 @@ interface WordDao {
 
     @Query("DELETE FROM vocabulary_words")
     fun clear()
+
+}
+
+@Dao
+interface UserDao {
 
 }

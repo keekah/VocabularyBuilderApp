@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder.database
+package me.wingert.vocabularybuilder.room
 
 import android.content.Context
 import androidx.room.Database
@@ -6,21 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [DatabaseVocabWord::class], version = 1, exportSchema = false)
-abstract class WordDatabase : RoomDatabase() {
+abstract class VocabularyBuilderDB : RoomDatabase() {
 
-    abstract val wordDao : WordDao
+    abstract val wordDao : Dao
 
     companion object {
 
         @Volatile
-        private var INSTANCE : WordDatabase? = null
+        private var INSTANCE : VocabularyBuilderDB? = null
 
-        fun getInstance(context: Context) : WordDatabase {
+        fun getInstance(context: Context) : VocabularyBuilderDB {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, WordDatabase::class.java, "vocabulary_words_database").fallbackToDestructiveMigration().build()
+                    instance = Room.databaseBuilder(context.applicationContext, VocabularyBuilderDB::class.java, "vocabulary_words_database").fallbackToDestructiveMigration().build()
 
                     INSTANCE = instance
                 }

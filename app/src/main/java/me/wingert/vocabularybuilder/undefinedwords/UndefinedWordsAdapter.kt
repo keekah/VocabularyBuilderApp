@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.database.DatabaseVocabWord
 
 class UndefinedWordsAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<UndefinedWordsAdapter.ViewHolder>() {
 

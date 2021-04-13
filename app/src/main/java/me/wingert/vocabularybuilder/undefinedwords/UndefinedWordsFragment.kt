@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.define_word_popup.view.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.database.WordDatabase
+import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentUndefinedWordsBinding
 
 class UndefinedWordsFragment : Fragment() {
@@ -44,7 +44,7 @@ class UndefinedWordsFragment : Fragment() {
 
     private fun initializeViewModel() {
         val application = requireNotNull(this.activity).application
-        val dataSource = WordDatabase.getInstance(application).wordDao
+        val dataSource = VocabularyBuilderDB.getInstance(application).wordDao
 
         viewModelFactory = UndefinedWordsViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(UndefinedWordsViewModel::class.java)

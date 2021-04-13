@@ -3,10 +3,10 @@ package me.wingert.vocabularybuilder.allwords
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import me.wingert.vocabularybuilder.database.WordDao
+import me.wingert.vocabularybuilder.room.Dao
 import java.lang.IllegalArgumentException
 
-class AllWordsViewModelFactory(private val dataSource: WordDao, private val application: Application) : ViewModelProvider.Factory {
+class AllWordsViewModelFactory(private val dataSource: Dao, private val application: Application) : ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
