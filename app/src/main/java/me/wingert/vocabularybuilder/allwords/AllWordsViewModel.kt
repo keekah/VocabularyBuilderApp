@@ -8,11 +8,11 @@ import kotlinx.coroutines.launch
 import me.wingert.vocabularybuilder.Repository
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.room.DatabaseVocabWord
-import me.wingert.vocabularybuilder.room.Dao
+import me.wingert.vocabularybuilder.room.WordDao
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import java.io.IOException
 
-class AllWordsViewModel(val database: Dao, application: Application) : AndroidViewModel(application) {
+class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(VocabularyBuilderDB.getInstance(application))
     val wordListAll = repository.allWords

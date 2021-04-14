@@ -45,4 +45,7 @@ interface WordDao {
 @Dao
 interface UserDao {
 
+    @Insert
+    fun addNewUser(user: DatabaseUser)
+
 }

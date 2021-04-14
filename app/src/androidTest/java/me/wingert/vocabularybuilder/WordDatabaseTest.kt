@@ -7,8 +7,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import junit.framework.Assert.*
 import me.wingert.vocabularybuilder.room.DatabaseVocabWord
-import me.wingert.vocabularybuilder.room.Dao
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
+import me.wingert.vocabularybuilder.room.WordDao
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -20,7 +20,7 @@ import java.lang.Exception
 @RunWith(AndroidJUnit4::class)
 class WordDatabaseTest {
 
-    private lateinit var wordDao : Dao
+    private lateinit var wordDao : WordDao
     private lateinit var database : VocabularyBuilderDB
 
     @get:Rule
