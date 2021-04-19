@@ -12,6 +12,8 @@ import me.wingert.vocabularybuilder.room.WordDao
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import java.io.IOException
 
+const val GO_BEARS = "GO BEARS!"
+
 class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(VocabularyBuilderDB.getInstance(application))
@@ -30,6 +32,15 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
                 Log.d("AllWordsVM", "Failed to refresh repository: ${networkError.message}")
             }
         }
+    }
+
+    // Called when the word is equal to the Noorvik zip code (99763).
+    fun cheerForBears(word: String, definition: String?) {
+        val def =
+            if (definition.isNullOrEmpty()) GO_BEARS
+            else "$definition; $GO_BEARS"
+
+        addWord(word, def)
     }
 
     fun addWord(word: String, definition: String?) {

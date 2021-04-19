@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 
+const val NOORVIK_ZIP = "99763"
+
 class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, private val onClickListener: OnClickListener) : RecyclerView.Adapter<AllWordsAdapter.ViewHolder>() {
 
     var words: List<VocabWord> = emptyList()
@@ -26,6 +28,8 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = words[position]
+
+        holder.bearsLogo.visibility = View.GONE
 
         holder.wordText.bringToFront()
         holder.deleteIcon.bringToFront()
@@ -51,6 +55,16 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
             else -> View.VISIBLE
         }
 
+        holder.bearsLogo.visibility = when (holder.bearsLogo.visibility) {
+            View.VISIBLE -> View.GONE
+            else -> {
+                if (holder.wordText.text == NOORVIK_ZIP)
+                    View.VISIBLE
+                else
+                    View.GONE
+            }
+        }
+
     }
 
 
@@ -59,6 +73,7 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
         val wordText : TextView = itemView.findViewById(R.id.word_text)
         val deleteIcon : ImageView = itemView.findViewById(R.id.delete_icon)
         val definitionText : TextView = itemView.findViewById(R.id.definition_text)
+        val bearsLogo : ImageView = itemView.findViewById(R.id.bears_logo)
 
         companion object {
 

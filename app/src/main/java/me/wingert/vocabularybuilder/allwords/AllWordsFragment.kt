@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.os.ConfigurationCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
+import java.util.*
 
 
 class AllWordsFragment : Fragment() {
@@ -91,11 +93,17 @@ class AllWordsFragment : Fragment() {
     }
 
     private fun onAdd() {
-        val word = binding.wordEdit.text.toString().trim().toLowerCase()
-        val definition = binding.definitionEdit.text.toString().trim().toLowerCase()
+        val locale = ConfigurationCompat.getLocales(resources.configuration)[0]
+        val word = binding.wordEdit.text.toString().trim().toLowerCase(locale)
+        val definition = binding.definitionEdit.text.toString().trim().toLowerCase(locale)
 
         if (word.isNotEmpty()) {
-            viewModel.addWord(word, definition)
+            // Check for Noorvik Easter Egg
+            if (word == "99763") {
+                viewModel.cheerForBears(word, definition)
+            }
+            else
+                viewModel.addWord(word, definition)
         }
         else {
             Toast.makeText(context, "Word must not be empty", Toast.LENGTH_SHORT).show()
