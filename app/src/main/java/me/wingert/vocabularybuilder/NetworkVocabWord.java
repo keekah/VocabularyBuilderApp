@@ -4,25 +4,28 @@ import com.google.gson.annotations.SerializedName;
 
 public class NetworkVocabWord {
 
-    @SerializedName("id")
-    public int id;
+//    @SerializedName("id")
+    private int id;
 
-    @SerializedName("word")
-    public String word;
+    private String word;
 
-    @SerializedName("definition")
-    public String definition;
+    private String definition;
 
-    public NetworkVocabWord(int id, String word, String definition) {
+    private Integer userId;
+
+    private String addedDateTime;
+
+    private String modifiedDateTime;
+
+    public NetworkVocabWord(int id, String word, String definition, Integer userId, String addedDateTime, String modifiedDateTime) {
         this.id = id;
         this.word = word;
         this.definition = definition;
+        this.userId = userId;
+        this.addedDateTime = addedDateTime;
+        this.modifiedDateTime = modifiedDateTime;
     }
 
-    public NetworkVocabWord(String word, String definition) {
-        this.word = word;
-        this.definition = definition;
-    }
 
     public int getId() {
         return id;
@@ -36,6 +39,12 @@ public class NetworkVocabWord {
         return definition;
     }
 
+    public Integer getUserId() { return userId; }
+
+    public String getAddedDateTime() { return addedDateTime; }
+
+    public String getModifiedDateTime() { return modifiedDateTime; }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -48,8 +57,14 @@ public class NetworkVocabWord {
         this.definition = definition;
     }
 
+    public void setUserId(Integer userId) { this.userId = userId; }
+
+    public void setAddedDateTime(String addedDateTime) { this.addedDateTime = addedDateTime; }
+
+    public void setModifiedDateTime(String modifiedDateTime) { this.modifiedDateTime = modifiedDateTime; }
+
     public String toString() {
-        return "Post(" + id + " " + word + ": " + definition + ")";
+        return id + " " + word + ": " + definition + " " + userId;
     }
 
 }

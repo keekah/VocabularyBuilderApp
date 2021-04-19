@@ -8,14 +8,20 @@ data class VocabWord(
 
     val word : String,
 
-    var definition : String? = null
+    var definition : String? = null,
+
+    var userId : Int? = null,
+
+    var addedDateTime : String? = null,
+
+    var modifiedDateTime : String? = null
 )
 
 fun asDatabaseVocabWord(vocab: VocabWord) : DatabaseVocabWord {
-    return DatabaseVocabWord(vocab.id, vocab.word, vocab.definition)
+    return DatabaseVocabWord(vocab.id, vocab.word, vocab.definition, vocab.userId, vocab.addedDateTime, vocab.modifiedDateTime)
 }
 
 fun asNetworkVocabWord(vocab: VocabWord) : NetworkVocabWord {
-    return NetworkVocabWord(vocab.id, vocab.word, vocab.definition)
+    return NetworkVocabWord(vocab.id, vocab.word, vocab.definition, vocab.userId, vocab.addedDateTime, vocab.modifiedDateTime)
 }
 

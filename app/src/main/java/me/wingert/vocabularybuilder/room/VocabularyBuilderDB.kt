@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [DatabaseVocabWord::class, DatabaseUser::class], version = 2, exportSchema = true)
+@Database(entities = [DatabaseVocabWord::class, DatabaseUser::class], version = 5, exportSchema = true)
 abstract class VocabularyBuilderDB : RoomDatabase() {
 
     abstract val wordDao : WordDao

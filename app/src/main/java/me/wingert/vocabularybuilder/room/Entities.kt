@@ -17,13 +17,13 @@ data class DatabaseVocabWord(
     var definition : String? = null,
 
     @ColumnInfo(name = "user_id")
-    var userId : Int,
+    var userId : Int? = null,
 
     @ColumnInfo(name = "added_date_time")
-    var addedDateTime : String?,
+    var addedDateTime : String? = null,
 
     @ColumnInfo(name = "modified_date_time")
-    var modifiedDateTime : String?
+    var modifiedDateTime : String? = null
 )
 
 fun List<DatabaseVocabWord>.asDomainModel() : List<VocabWord> {
@@ -31,7 +31,10 @@ fun List<DatabaseVocabWord>.asDomainModel() : List<VocabWord> {
         VocabWord(
             id = it.id,
             word = it.word,
-            definition = it.definition
+            definition = it.definition,
+            userId = it.userId,
+            addedDateTime = it.addedDateTime,
+            modifiedDateTime = it.modifiedDateTime
         )
     }
 }
