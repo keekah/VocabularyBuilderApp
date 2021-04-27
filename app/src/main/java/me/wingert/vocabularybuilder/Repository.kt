@@ -24,8 +24,7 @@ class Repository(private val database: VocabularyBuilderDB) {
         it.asDomainModel()
     }
 
-    // Clears the local cache, then retrieves all the words from the web service and stores them in
-    // the local cache. All the words returned from the web service will be unique.
+
     // The init parameter indicates whether the local cache is being populated for the first time.
     suspend fun getAllWords(init: Boolean) {
         withContext(Dispatchers.IO) {
@@ -45,31 +44,33 @@ class Repository(private val database: VocabularyBuilderDB) {
     // Update the local cache so that it is in sync with the latest data pulled from the network.
     private suspend fun updateLocalCache(networkWords : List<VocabWord>) {
         withContext(Dispatchers.IO) {
-            val cachedWords = database.wordDao.getWords()
-            val wordsToCheckForUpdates = mutableListOf<VocabWord>()
 
+            // For efficiency, create a map of the vocabulary words that are retrieved from the network.
+            val networkWordMap = HashMap<Int, VocabWord>()
+            for (word in networkWords)
+                networkWordMap[word.id] = word
+
+            // Do the same for the words in our local cache. This time, a set will do.
+            val cachedWords = database.wordDao.getWords()
             val cachedIds = HashSet<Int>()
             for (word in cachedWords)
                 cachedIds.add(word.id)
 
-            val networkIdMap = HashMap<Int, VocabWord>()
-            for (word in networkWords)
-                networkIdMap[word.id] = word
-
             // Find the words from networkWords (the most recent data) that are not in the local
             // cache and add them to the local cache. If a word is in both, add it to a list of
             // words that need to be checked for updates.
-            for (id in networkIdMap.keys) {
+            val wordsToCheckForUpdates = mutableListOf<VocabWord>()
+            for (id in networkWordMap.keys) {
                 if (!cachedIds.contains(id))
-                    database.wordDao.insert(asDatabaseVocabWord(networkIdMap[id]!!))
+                    database.wordDao.insert(asDatabaseVocabWord(networkWordMap[id]!!))
                 else
-                    wordsToCheckForUpdates.add(networkIdMap[id]!!)
+                    wordsToCheckForUpdates.add(networkWordMap[id]!!)
             }
 
             // Find the words stored locally that are not in the list of networkWords and delete
             // them from the local cache.
             for (id in cachedIds) {
-                if (networkIdMap[id] == null)
+                if (networkWordMap[id] == null)
                     database.wordDao.deleteWord(database.wordDao.getWord(id)!!)
             }
 
@@ -77,7 +78,7 @@ class Repository(private val database: VocabularyBuilderDB) {
             // according to the data in the networkWords, as that is the most recent data. If a word
             // was ever given a definition, it will be contained in the network word.
             for (word in wordsToCheckForUpdates) {
-                val new = networkIdMap[word.id]
+                val new = networkWordMap[word.id]
                 val old = database.wordDao.getWord(word.id)
                 if (new!!.definition != old!!.definition) {
                     old.definition = new.definition
@@ -99,6 +100,7 @@ class Repository(private val database: VocabularyBuilderDB) {
         }
     }
 
+    // Delete the word from the web service and then update the local cache.
     suspend fun deleteWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
             try {
@@ -111,7 +113,9 @@ class Repository(private val database: VocabularyBuilderDB) {
         }
     }
 
-    // The vocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
+    // The VocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
+    // This method is called when adding a word to the list for the first time or when retroactively
+    // adding a definition to a word that is already in the list.
     suspend fun updateWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
             try {

@@ -95,7 +95,7 @@ class AllWordsAdapter(private val deleteClickListener: DeleteClickListener, priv
         fun onClick(vocab: VocabWord) = deleteClickListener(vocab)
     }
 
-    // Click on a word to expand the view, showing definition and delete icon.
+    // Click on a word to expand the view, showing definition and deletion icon.
     class OnClickListener(val clickListener: (vocab: VocabWord) -> Unit) {
         fun onClick(vocab: VocabWord) {
             clickListener(vocab)
