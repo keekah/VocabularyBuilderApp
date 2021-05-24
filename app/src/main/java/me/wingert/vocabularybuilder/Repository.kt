@@ -1,6 +1,7 @@
 package me.wingert.vocabularybuilder
 
 import android.accounts.NetworkErrorException
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -10,7 +11,9 @@ import me.wingert.vocabularybuilder.Api.retrofitService
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.room.asDomainModel
 
-class Repository(private val database: VocabularyBuilderDB) {
+class Repository(private val database: VocabularyBuilderDB, context: Context) {
+
+    private val sessionManager = SessionManager(context)
 
     val allWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getAllWords()) {
         it.asDomainModel()
@@ -28,7 +31,10 @@ class Repository(private val database: VocabularyBuilderDB) {
     // The init parameter indicates whether the local cache is being populated for the first time.
     suspend fun getAllWords(init: Boolean) {
         withContext(Dispatchers.IO) {
-            val wordList = retrofitService.getVocabularyWords()
+            val authToken = sessionManager.fetchAuthToken();
+            Log.i("Repository", "getAllWords() called...q")
+            val wordList = retrofitService.getVocabularyWords(token = authToken!!)
+            Log.i("Repository", "wordListRetrieved")
             when (init) {
                 true -> {
                     database.wordDao.clear()
@@ -88,23 +94,12 @@ class Repository(private val database: VocabularyBuilderDB) {
         }
     }
 
-    // Adds the word to the database for the first time.
-    suspend fun addWord(vocabWord: VocabWord) {
-        withContext(Dispatchers.IO) {
-            try {
-                retrofitService.addWord(asNetworkVocabWord(vocabWord))
-            }
-            catch (e: NetworkErrorException) {
-                Log.d("Repository", "Failed to add word: $vocabWord. ${e.message}")
-            }
-        }
-    }
-
     // Delete the word from the web service and then update the local cache.
     suspend fun deleteWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
+            val authToken = sessionManager.fetchAuthToken()
             try {
-                retrofitService.deleteWord(vocabWord.word)
+                retrofitService.deleteWord(authToken!!, vocabWord.word)
                 getAllWords(false)
             }
             catch (e: Exception) {
@@ -118,14 +113,20 @@ class Repository(private val database: VocabularyBuilderDB) {
     // adding a definition to a word that is already in the list.
     suspend fun updateWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
+            val authToken = sessionManager.fetchAuthToken()
+
             try {
-                retrofitService.updateWord(asNetworkVocabWord(vocabWord))
+                retrofitService.updateWord(authToken!!, asNetworkVocabWord(vocabWord))
                 getAllWords(false)
             }
             catch (e: NetworkErrorException) {
+                database.wordDao.insert(asDatabaseVocabWord(vocabWord))
                 Log.d("Repository", "Failed to update word: $vocabWord. ${e.message}")
             }
         }
     }
 
 }
+
+
+

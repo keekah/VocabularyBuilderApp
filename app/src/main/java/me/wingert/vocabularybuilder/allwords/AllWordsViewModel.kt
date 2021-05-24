@@ -16,7 +16,7 @@ const val GO_BEARS = "GO BEARS!"
 
 class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    private val repository = Repository(VocabularyBuilderDB.getInstance(application))
+    private val repository = Repository(VocabularyBuilderDB.getInstance(application), application.applicationContext)
     val wordListAll = repository.allWords
 
     init {
@@ -29,6 +29,7 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
                 repository.getAllWords(true)
             }
             catch (networkError: IOException) {
+                Log.d("AllWordsVM", "Failed to refresh repository: ${networkError.cause.toString()}")
                 Log.d("AllWordsVM", "Failed to refresh repository: ${networkError.message}")
             }
         }

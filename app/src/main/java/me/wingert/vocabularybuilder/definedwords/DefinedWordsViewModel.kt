@@ -13,7 +13,7 @@ import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 
 class DefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    private val repository = Repository(VocabularyBuilderDB.getInstance(application))
+    private val repository = Repository(VocabularyBuilderDB.getInstance(application), application.applicationContext)
     val wordListDefined = repository.definedWords
 
     fun deleteWord(vocabWord: VocabWord) {

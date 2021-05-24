@@ -92,6 +92,10 @@ class AllWordsFragment : Fragment() {
         binding.allWordsList.adapter = adapter
     }
 
+    // TODO move tolowercase call to the server-side. i.e., when checking for a word's existence in
+    // the database, compare lowercase versions, but allow the user to store words and definitions with
+    // capitals
+
     private fun onAdd() {
         val locale = ConfigurationCompat.getLocales(resources.configuration)[0]
         val word = binding.wordEdit.text.toString().trim().toLowerCase(locale)

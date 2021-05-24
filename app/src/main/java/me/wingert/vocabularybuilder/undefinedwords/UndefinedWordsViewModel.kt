@@ -12,7 +12,7 @@ import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 
 class UndefinedWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
 
-    private val repository = Repository(VocabularyBuilderDB.getInstance(application))
+    private val repository = Repository(VocabularyBuilderDB.getInstance(application), application.applicationContext)
     val undefinedWords = repository.undefinedWords
 
     fun addDefinition(vocabWord: VocabWord, definition: String) {
