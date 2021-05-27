@@ -1,7 +1,6 @@
 package me.wingert.vocabularybuilder.undefinedwords
 
 import android.app.Application
-//import android.provider.Settings.Global.getString
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch

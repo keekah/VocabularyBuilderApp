@@ -33,17 +33,20 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
         withContext(Dispatchers.IO) {
             val authToken = sessionManager.fetchAuthToken();
             Log.i("Repository", "getAllWords() called...q")
-            val wordList = retrofitService.getVocabularyWords(token = authToken!!)
+            val wordList = retrofitService.getVocabularyWords(token = authToken!!).map { asDatabaseVocabWord(it) }
             Log.i("Repository", "wordListRetrieved")
-            when (init) {
-                true -> {
-                    database.wordDao.clear()
-                    wordList.map { database.wordDao.insert(asDatabaseVocabWord(it)) }
-                }
-                false -> {
-                    updateLocalCache(wordList)
-                }
-            }
+            database.wordDao.insertAll(wordList)
+//            when (init) {
+//                true -> {
+////                    database.wordDao.clear()
+////                    wordList.map { database.wordDao.insert(asDatabaseVocabWord(it)) }
+//                    database.wordDao.insertAll(wordList)
+//                }
+//                false -> {
+////                    updateLocalCache(wordList)
+//                    database.wordDao.insertAll(wordList)
+//                }
+//            }
         }
     }
 

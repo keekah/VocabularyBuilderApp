@@ -9,7 +9,7 @@ interface WordDao {
     @Insert
     fun insert(word: DatabaseVocabWord)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(words: List<DatabaseVocabWord>)
 
     @Update
@@ -39,13 +39,5 @@ interface WordDao {
 
     @Query("DELETE FROM vocabulary_words")
     fun clear()
-
-}
-
-@Dao
-interface UserDao {
-
-    @Insert
-    fun addNewUser(user: DatabaseUser)
 
 }

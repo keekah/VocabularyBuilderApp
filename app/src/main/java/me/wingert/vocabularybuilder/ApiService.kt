@@ -9,7 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.lang.reflect.Type
 
-private const val BASE_URL = "http://10.0.2.2:8080/"
+// vocabularybuilder.westus.cloudapp.azure.com
+// 23.99.68.178
+private const val BASE_URL = "http://192.168.1.254:8080/"
 private const val AUTHORIZATION = "Authorization"
 
 private val moshi = Moshi.Builder()
