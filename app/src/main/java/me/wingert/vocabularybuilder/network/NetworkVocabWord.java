@@ -1,10 +1,7 @@
-package me.wingert.vocabularybuilder;
-
-import com.google.gson.annotations.SerializedName;
+package me.wingert.vocabularybuilder.network;
 
 public class NetworkVocabWord {
 
-//    @SerializedName("id")
     private int id;
 
     private String word;

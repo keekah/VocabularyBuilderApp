@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.network
 
 import android.accounts.NetworkErrorException
 import android.content.Context
@@ -7,7 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.wingert.vocabularybuilder.Api.retrofitService
+import me.wingert.vocabularybuilder.VocabWord
+import me.wingert.vocabularybuilder.asDatabaseVocabWord
+import me.wingert.vocabularybuilder.asNetworkVocabWord
+import me.wingert.vocabularybuilder.network.Api.retrofitService
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.room.asDomainModel
 

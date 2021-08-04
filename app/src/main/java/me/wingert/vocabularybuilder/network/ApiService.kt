@@ -1,5 +1,6 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.network
 
+import me.wingert.vocabularybuilder.VocabWord
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*

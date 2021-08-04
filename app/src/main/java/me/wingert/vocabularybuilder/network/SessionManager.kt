@@ -1,6 +1,7 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.network
 
 import android.content.Context
+import me.wingert.vocabularybuilder.R
 
 // Used to save and retrieve the token on the user's device
 class SessionManager(context: Context) {

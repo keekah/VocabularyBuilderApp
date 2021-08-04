@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GetTokenResult
 import me.wingert.vocabularybuilder.allwords.AllWordsFragment
 import me.wingert.vocabularybuilder.databinding.FragmentLoginBinding
+import me.wingert.vocabularybuilder.network.SessionManager
 
 class LoginFragment : Fragment() {
 
