@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_undefined_words" />
     <fragment
         android:id="@+id/fragment_login"
-        android:name="me.wingert.vocabularybuilder.LoginFragment"
+        android:name="me.wingert.vocabularybuilder.authentication.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"/>
 

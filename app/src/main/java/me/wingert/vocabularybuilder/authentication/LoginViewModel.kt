@@ -1,9 +1,8 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
 
 class LoginViewModel : ViewModel() {
 
@@ -11,7 +10,9 @@ class LoginViewModel : ViewModel() {
         AUTHENTICATED, UNAUTHENTICATED
     }
 
-    val authenticationState : LiveData<AuthenticationState> = Transformations.map (FirebaseUserLiveData()) { user  ->
+    val authenticationState : LiveData<AuthenticationState> = Transformations.map (
+        FirebaseUserLiveData()
+    ) { user  ->
         if (user != null) {
             AuthenticationState.AUTHENTICATED
         }

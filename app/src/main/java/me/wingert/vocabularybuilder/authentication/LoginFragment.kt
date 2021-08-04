@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.authentication
 
 import android.app.Activity
 import android.content.Intent
@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GetTokenResult
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.allwords.AllWordsFragment
 import me.wingert.vocabularybuilder.databinding.FragmentLoginBinding
 import me.wingert.vocabularybuilder.network.SessionManager

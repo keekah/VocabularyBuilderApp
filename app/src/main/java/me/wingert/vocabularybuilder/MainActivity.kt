@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.wingert.vocabularybuilder.undefinedwords.UndefinedWordsFragment
 import me.wingert.vocabularybuilder.allwords.AllWordsFragment
+import me.wingert.vocabularybuilder.authentication.LoginFragment
+import me.wingert.vocabularybuilder.authentication.LoginViewModel
 import me.wingert.vocabularybuilder.definedwords.DefinedWordsFragment
 
 class MainActivity : AppCompatActivity() {

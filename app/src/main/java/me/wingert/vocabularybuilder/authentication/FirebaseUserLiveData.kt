@@ -1,4 +1,4 @@
-package me.wingert.vocabularybuilder
+package me.wingert.vocabularybuilder.authentication
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth
