@@ -33,20 +33,20 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
         withContext(Dispatchers.IO) {
             val authToken = sessionManager.fetchAuthToken();
             Log.i("Repository", "getAllWords() called...q")
-            val wordList = retrofitService.getVocabularyWords(token = authToken!!).map { asDatabaseVocabWord(it) }
+            val wordList = retrofitService.getVocabularyWords(token = authToken!!)
+            val databaseWordList = wordList.map { asDatabaseVocabWord(it) }
             Log.i("Repository", "wordListRetrieved")
-            database.wordDao.insertAll(wordList)
-//            when (init) {
-//                true -> {
-////                    database.wordDao.clear()
-////                    wordList.map { database.wordDao.insert(asDatabaseVocabWord(it)) }
-//                    database.wordDao.insertAll(wordList)
-//                }
-//                false -> {
-////                    updateLocalCache(wordList)
-//                    database.wordDao.insertAll(wordList)
-//                }
-//            }
+
+            when (init) {
+                true -> {
+                    database.wordDao.clear()
+                    database.wordDao.insertAll(databaseWordList)
+                }
+                false -> {
+                    updateLocalCache(wordList)
+                    database.wordDao.insertAll(databaseWordList)
+                }
+            }
         }
     }
 
@@ -111,9 +111,9 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
         }
     }
 
-    // The VocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
     // This method is called when adding a word to the list for the first time or when retroactively
     // adding a definition to a word that is already in the list.
+    // The VocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
     suspend fun updateWord(vocabWord: VocabWord) {
         withContext(Dispatchers.IO) {
             val authToken = sessionManager.fetchAuthToken()

@@ -2,7 +2,6 @@ package me.wingert.vocabularybuilder.allwords
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
     private fun refreshRepository() {
         viewModelScope.launch {
             try {
-                repository.getAllWords(false)
+                repository.getAllWords(true)
             }
             catch (networkError: IOException) {
                 Log.d("AllWordsVM", "Failed to refresh repository: ${networkError.cause.toString()}")
