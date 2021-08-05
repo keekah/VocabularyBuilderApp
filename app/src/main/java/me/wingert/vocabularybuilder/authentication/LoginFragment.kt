@@ -3,7 +3,6 @@ package me.wingert.vocabularybuilder.authentication
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,19 +48,15 @@ class LoginFragment : Fragment() {
             val user = FirebaseAuth.getInstance().currentUser
 
             if (resultCode == Activity.RESULT_OK) {
-                Log.i("LoginFragment", "Successfully signed in user ${user?.displayName}!")
                 // Retrieve the JWT used to identify the user to Firebase. true indicates that the
                 // token will always be refreshed. OnCompleteListener allows us to handle success
                 // and failure in the same listener.
-                Log.i("LoginFragment", "Acquiring token...")
 
                 user!!.getIdToken(true)
                     .addOnCompleteListener(object: OnCompleteListener<GetTokenResult> {
                         override fun onComplete(@NonNull task: Task<GetTokenResult>) {
-                            Log.i("LoginFragment", "Calling oncompletelistener")
                             if (task.isSuccessful) {
                                 val idToken = task.result?.token;
-                                Log.i("LoginFragment", "Token acquired! $idToken")
                                 sessionManager.saveAuthToken(idToken!!)
                                 // Navigate
                                 activity?.supportFragmentManager?.beginTransaction()?.apply {
@@ -70,23 +65,14 @@ class LoginFragment : Fragment() {
                                 }
 
                             } else {
-                                Log.d("LoginFragment", "Failed to retrieve JWT. ${task.exception}")
                             }
                         }
                     })
-
-                Log.i("LoginFragment", "outside getId token")
-
-            }
-            else {
-                Log.i("LoginFragment", "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
     }
 
     private fun launchSignInFlow() {
-
-        Log.i("LoginFragment", "LoginButton clicked")
 
         val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build(),
                                     AuthUI.IdpConfig.GoogleBuilder().build()

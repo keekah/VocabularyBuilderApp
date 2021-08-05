@@ -2,7 +2,6 @@ package me.wingert.vocabularybuilder.allwords
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -17,7 +16,6 @@ import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
-import java.util.*
 
 
 class AllWordsFragment : Fragment() {
@@ -48,10 +46,8 @@ class AllWordsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout_item) {
             AuthUI.getInstance().signOut(requireContext())
-//            findNavController().navigate(R.id.fragment_login)
         }
 
-        Log.i("AllWordsFragment", "Signed out")
         return super.onOptionsItemSelected(item)
     }
 
@@ -91,10 +87,6 @@ class AllWordsFragment : Fragment() {
 
         binding.allWordsList.adapter = adapter
     }
-
-    // TODO move tolowercase call to the server-side. i.e., when checking for a word's existence in
-    // the database, compare lowercase versions, but allow the user to store words and definitions with
-    // capitals
 
     private fun onAdd() {
         val locale = ConfigurationCompat.getLocales(resources.configuration)[0]

@@ -2,7 +2,6 @@ package me.wingert.vocabularybuilder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -47,12 +46,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.undefined_words_tab -> {
                     setCurrentFragment(undefinedWordsFragment)
-                    Log.i("MainActivity", "Undefined words tab selected")
                     true
                 }
                 else -> {
                     setCurrentFragment(definedWordsFragment)
-                    Log.i("MainActivity", "Other tab selected")
                     true
                 }
             }

@@ -2,7 +2,6 @@ package me.wingert.vocabularybuilder.network
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
@@ -35,10 +34,8 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
     suspend fun getAllWords(init: Boolean) {
         withContext(Dispatchers.IO) {
             val authToken = sessionManager.fetchAuthToken();
-            Log.i("Repository", "getAllWords() called...q")
             val wordList = retrofitService.getVocabularyWords(token = authToken!!)
             val databaseWordList = wordList.map { asDatabaseVocabWord(it) }
-            Log.i("Repository", "wordListRetrieved")
 
             when (init) {
                 true -> {
@@ -109,7 +106,7 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
                 getAllWords(false)
             }
             catch (e: Exception) {
-                Log.d("Repository", "Failed to delete word: $vocabWord. ${e.message}")
+                // TODO handle exception
             }
         }
     }
@@ -127,7 +124,6 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
             }
             catch (e: NetworkErrorException) {
                 database.wordDao.insert(asDatabaseVocabWord(vocabWord))
-                Log.d("Repository", "Failed to update word: $vocabWord. ${e.message}")
             }
         }
     }
