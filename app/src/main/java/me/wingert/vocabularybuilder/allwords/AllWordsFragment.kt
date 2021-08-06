@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.asDatabaseVocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentAllWordsBinding
 
@@ -80,8 +79,6 @@ class AllWordsFragment : Fragment() {
         binding.viewModel = viewModel
     }
 
-    // TODO fix this OnClickListener. Do I need it? I don't think I do.
-    // TODO fix these casts (and their equivalents in the other fragments) -- they break the app, i.e. the click listeners do not work right now
     private fun initializeAdapter() {
         adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) })
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.wingert.vocabularybuilder.network.Repository
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.room.DatabaseVocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import java.io.IOException
 
@@ -27,7 +26,7 @@ class AllWordsViewModel(application: Application) : AndroidViewModel(application
                 repository.getAllWords(true)
             }
             catch (networkError: IOException) {
-                // TODO fill in
+                // TODO handle exception
             }
         }
     }
@@ -55,10 +54,6 @@ class AllWordsViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             repository.deleteWord(vocabWord)
         }
-    }
-
-    fun onItemClick(vocab: DatabaseVocabWord) {
-
     }
 
 }
