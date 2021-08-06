@@ -32,7 +32,7 @@ class AllWordsFragment : Fragment() {
 
         viewModel.wordListAll.observe(viewLifecycleOwner, Observer<List<VocabWord>> {
             words -> words?.apply {
-                adapter?.words = words
+                adapter.words = words
             }
         })
 
@@ -83,7 +83,7 @@ class AllWordsFragment : Fragment() {
     // TODO fix this OnClickListener. Do I need it? I don't think I do.
     // TODO fix these casts (and their equivalents in the other fragments) -- they break the app, i.e. the click listeners do not work right now
     private fun initializeAdapter() {
-        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) }, AllWordsAdapter.OnClickListener { viewModel.onItemClick(asDatabaseVocabWord(it)) })
+        adapter = AllWordsAdapter(AllWordsAdapter.DeleteClickListener { viewModel.deleteWord(it) })
 
         binding.allWordsList.adapter = adapter
     }

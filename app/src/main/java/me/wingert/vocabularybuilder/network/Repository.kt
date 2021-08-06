@@ -33,7 +33,7 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
     // The init parameter indicates whether the local cache is being populated for the first time.
     suspend fun getAllWords(init: Boolean) {
         withContext(Dispatchers.IO) {
-            val authToken = sessionManager.fetchAuthToken();
+            val authToken = sessionManager.fetchAuthToken()
             val wordList = retrofitService.getVocabularyWords(token = authToken!!)
             val databaseWordList = wordList.map { asDatabaseVocabWord(it) }
 

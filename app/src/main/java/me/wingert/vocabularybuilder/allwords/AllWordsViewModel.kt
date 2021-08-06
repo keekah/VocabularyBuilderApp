@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.wingert.vocabularybuilder.network.Repository
 import me.wingert.vocabularybuilder.VocabWord
-import me.wingert.vocabularybuilder.room.WordDao
+import me.wingert.vocabularybuilder.room.DatabaseVocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import java.io.IOException
 
 const val GO_BEARS = "GO BEARS!"
 
-class AllWordsViewModel(val database: WordDao, application: Application) : AndroidViewModel(application) {
+class AllWordsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = Repository(VocabularyBuilderDB.getInstance(application), application.applicationContext)
     val wordListAll = repository.allWords
@@ -55,6 +55,10 @@ class AllWordsViewModel(val database: WordDao, application: Application) : Andro
         viewModelScope.launch {
             repository.deleteWord(vocabWord)
         }
+    }
+
+    fun onItemClick(vocab: DatabaseVocabWord) {
+
     }
 
 }

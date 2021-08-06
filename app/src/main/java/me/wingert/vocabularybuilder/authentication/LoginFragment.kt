@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener(object: OnCompleteListener<GetTokenResult> {
                         override fun onComplete(@NonNull task: Task<GetTokenResult>) {
                             if (task.isSuccessful) {
-                                val idToken = task.result?.token;
+                                val idToken = task.result?.token
                                 sessionManager.saveAuthToken(idToken!!)
                                 // Navigate
                                 activity?.supportFragmentManager?.beginTransaction()?.apply {

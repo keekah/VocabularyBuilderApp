@@ -12,7 +12,7 @@ class AllWordsViewModelFactory(private val dataSource: WordDao, private val appl
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         if (modelClass.isAssignableFrom(AllWordsViewModel::class.java)) {
-            return AllWordsViewModel(dataSource, application) as T
+            return AllWordsViewModel(application) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

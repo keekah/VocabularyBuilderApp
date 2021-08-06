@@ -33,7 +33,7 @@ class UndefinedWordsFragment : Fragment() {
 
         viewModel.undefinedWords.observe(viewLifecycleOwner, Observer<List<VocabWord>> { words ->
             words?.apply {
-                adapter?.undefinedWords = words
+                adapter.undefinedWords = words
                 setHeader(words.isNullOrEmpty())
             }
         })
@@ -46,7 +46,7 @@ class UndefinedWordsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = VocabularyBuilderDB.getInstance(application).wordDao
 
-        viewModelFactory = UndefinedWordsViewModelFactory(dataSource, application)
+        viewModelFactory = UndefinedWordsViewModelFactory(application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(UndefinedWordsViewModel::class.java)
 
         binding.viewModel = viewModel

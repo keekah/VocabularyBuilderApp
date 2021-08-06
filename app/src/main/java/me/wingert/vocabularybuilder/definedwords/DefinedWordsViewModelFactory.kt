@@ -11,7 +11,7 @@ class DefinedWordsViewModelFactory(private val dataSource: WordDao, private val 
     @Suppress("unchecked_cast")
     override fun <T: ViewModel?> create (modelClass: Class<T>) : T {
         if (modelClass.isAssignableFrom(DefinedWordsViewModel::class.java)) {
-            return DefinedWordsViewModel(dataSource, application) as T
+            return DefinedWordsViewModel(application) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")
