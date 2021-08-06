@@ -1,11 +1,13 @@
 package me.wingert.vocabularybuilder.network
 
-import android.accounts.NetworkErrorException
 import android.content.Context
+import android.os.Looper
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.asDatabaseVocabWord
 import me.wingert.vocabularybuilder.asNetworkVocabWord
@@ -13,9 +15,10 @@ import me.wingert.vocabularybuilder.network.Api.retrofitService
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.room.asDomainModel
 
-class Repository(private val database: VocabularyBuilderDB, context: Context) {
+class Repository(private val database: VocabularyBuilderDB, private val context: Context) {
 
     private val sessionManager = SessionManager(context)
+    private val authToken = sessionManager.fetchAuthToken()
 
     val allWords: LiveData<List<VocabWord>> = Transformations.map(database.wordDao.getAllWords()) {
         it.asDomainModel()
@@ -29,23 +32,55 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
         it.asDomainModel()
     }
 
-
     // The init parameter indicates whether the local cache is being populated for the first time.
     suspend fun getAllWords(init: Boolean) {
         withContext(Dispatchers.IO) {
-            val authToken = sessionManager.fetchAuthToken()
-            val wordList = retrofitService.getVocabularyWords(token = authToken!!)
-            val databaseWordList = wordList.map { asDatabaseVocabWord(it) }
+            try {
+                val wordList = retrofitService.getVocabularyWords(authToken!!)
+                val databaseWordList = wordList.map { asDatabaseVocabWord(it) }
 
-            when (init) {
-                true -> {
-                    database.wordDao.clear()
-                    database.wordDao.insertAll(databaseWordList)
+                when (init) {
+                    true -> {
+                        database.wordDao.clear()
+                        database.wordDao.insertAll(databaseWordList)
+                    }
+                    false -> {
+                        updateLocalCache(wordList)
+                        database.wordDao.insertAll(databaseWordList)
+                    }
                 }
-                false -> {
-                    updateLocalCache(wordList)
-                    database.wordDao.insertAll(databaseWordList)
-                }
+            }
+            catch (e: Exception) {
+                showNetworkErrorToast()
+            }
+
+        }
+    }
+
+    // Delete the word from the web service and then update the local cache.
+    suspend fun deleteWord(vocabWord: VocabWord) {
+        withContext(Dispatchers.IO) {
+            try {
+                retrofitService.deleteWord(authToken!!, vocabWord.word)
+                getAllWords(false)
+            }
+            catch (e: Exception) {
+                showNetworkErrorToast()
+            }
+        }
+    }
+
+    // This method is called when adding a word to the list for the first time or when retroactively
+    // adding a definition to a word that is already in the list.
+    // The VocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
+    suspend fun updateWord(vocabWord: VocabWord) {
+        withContext(Dispatchers.IO) {
+            try {
+                retrofitService.updateWord(authToken!!, asNetworkVocabWord(vocabWord))
+                getAllWords(false)
+            }
+            catch (e: Exception) {
+                showNetworkErrorToast()
             }
         }
     }
@@ -97,35 +132,10 @@ class Repository(private val database: VocabularyBuilderDB, context: Context) {
         }
     }
 
-    // Delete the word from the web service and then update the local cache.
-    suspend fun deleteWord(vocabWord: VocabWord) {
-        withContext(Dispatchers.IO) {
-            val authToken = sessionManager.fetchAuthToken()
-            try {
-                retrofitService.deleteWord(authToken!!, vocabWord.word)
-                getAllWords(false)
-            }
-            catch (e: Exception) {
-                // TODO handle exception
-            }
-        }
-    }
-
-    // This method is called when adding a word to the list for the first time or when retroactively
-    // adding a definition to a word that is already in the list.
-    // The VocabWord passed is guaranteed to contain a word; it may or may not contain a definition.
-    suspend fun updateWord(vocabWord: VocabWord) {
-        withContext(Dispatchers.IO) {
-            val authToken = sessionManager.fetchAuthToken()
-
-            try {
-                retrofitService.updateWord(authToken!!, asNetworkVocabWord(vocabWord))
-                getAllWords(false)
-            }
-            catch (e: NetworkErrorException) {
-                database.wordDao.insert(asDatabaseVocabWord(vocabWord))
-            }
-        }
+    private fun showNetworkErrorToast() {
+        Looper.prepare()
+        Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_LONG).show()
+        Looper.loop()
     }
 
 }

@@ -7,7 +7,6 @@ import kotlinx.coroutines.launch
 import me.wingert.vocabularybuilder.network.Repository
 import me.wingert.vocabularybuilder.VocabWord
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
-import java.io.IOException
 
 const val GO_BEARS = "GO BEARS!"
 
@@ -22,12 +21,7 @@ class AllWordsViewModel(application: Application) : AndroidViewModel(application
 
     private fun refreshRepository() {
         viewModelScope.launch {
-            try {
-                repository.getAllWords(true)
-            }
-            catch (networkError: IOException) {
-                // TODO handle exception
-            }
+            repository.getAllWords(true)
         }
     }
 
