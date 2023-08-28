@@ -5,19 +5,19 @@ import android.view.*
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.define_word_popup.view.*
 import me.wingert.vocabularybuilder.R
 import me.wingert.vocabularybuilder.VocabWord
+import me.wingert.vocabularybuilder.databinding.DefineWordPopupBinding
 import me.wingert.vocabularybuilder.room.VocabularyBuilderDB
 import me.wingert.vocabularybuilder.databinding.FragmentUndefinedWordsBinding
 
 class UndefinedWordsFragment : Fragment() {
 
     private lateinit var binding : FragmentUndefinedWordsBinding
+    private lateinit var popupBinding: DefineWordPopupBinding
     private lateinit var viewModel: UndefinedWordsViewModel
     private lateinit var viewModelFactory: UndefinedWordsViewModelFactory
     private lateinit var adapter : UndefinedWordsAdapter
@@ -25,11 +25,13 @@ class UndefinedWordsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_undefined_words, container, false)
+        binding = FragmentUndefinedWordsBinding.inflate(inflater, container, false)
+        popupBinding = DefineWordPopupBinding.inflate(inflater, container, false)
 
         initializeViewModel()
 
         initializeAdapter()
+
 
         viewModel.undefinedWords.observe(viewLifecycleOwner, Observer<List<VocabWord>> { words ->
             words?.apply {
@@ -59,20 +61,20 @@ class UndefinedWordsFragment : Fragment() {
     }
 
     private fun showPopup(vocab: VocabWord) {
-        val popupView = layoutInflater.inflate(R.layout.define_word_popup, null)
+        val popupView = popupBinding.popupWindow
         val popupWindow = PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
 
-        popupView.word_to_define_text.text = vocab.word
-        popupView.definition_edit_text.requestFocus()
+        popupBinding.wordToDefineText.text = vocab.word
+        popupBinding.definitionEditText.requestFocus()
 
-        popupView.done_button.setOnClickListener { onDoneButtonClicked(vocab, popupView, popupWindow) }
-        popupView.delete_icon.setOnClickListener { onDelete(vocab, popupWindow) }
+        popupBinding.doneButton.setOnClickListener{ onDoneButtonClicked(vocab, popupView, popupWindow) }
+        popupBinding.deleteIcon.setOnClickListener { onDelete(vocab, popupWindow) }
 
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
     }
 
     private fun onDoneButtonClicked(vocabWord: VocabWord, popupView: View, popupWindow: PopupWindow) {
-        val definition = popupView.definition_edit_text.text.toString().trim().toLowerCase()
+        val definition = popupBinding.definitionEditText.text.toString().trim().toLowerCase()
 
         if (definition.isNotEmpty())
             viewModel.addDefinition(vocabWord, definition)
