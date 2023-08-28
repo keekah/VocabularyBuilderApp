@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 
-private const val BASE_URL = "http://vocabularybuilder.westus.cloudapp.azure.com:8080/"
+private const val BASE_URL = "http://vocabularybuilder.westus2.cloudapp.azure.com:8080"
 private const val AUTHORIZATION = "Authorization"
 
 private val retrofit = Retrofit.Builder()
