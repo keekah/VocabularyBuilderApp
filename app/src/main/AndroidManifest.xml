@@ -8,7 +8,7 @@
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="30" />
+        android:targetSdkVersion="33" />
 
     <supports-screens android:smallScreens="false"/>
 
@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyBuilder"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
