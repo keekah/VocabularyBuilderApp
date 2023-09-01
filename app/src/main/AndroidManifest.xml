@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="me.wingert.vocabularybuilder"
-    android:versionCode="2"
+    android:versionCode="3"
     android:versionName="@string/version_name">
 
     <uses-permission android:name="android.permission.INTERNET" />
